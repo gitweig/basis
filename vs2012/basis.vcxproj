@@ -62,6 +62,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\basis_define.h" />
+    <ClInclude Include="..\include\basis_notification.h" />
+    <ClInclude Include="..\include\basis_observer.h" />
+    <ClInclude Include="..\include\basis_subject.h" />
+    <ClInclude Include="..\include\basis_observer_ext.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
