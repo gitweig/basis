@@ -7,5 +7,5 @@
 int main()
 {
 	BSSubject aaa;
-	return 0;
+	return 2;
 }
