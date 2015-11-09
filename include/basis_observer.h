@@ -11,21 +11,21 @@ namespace basis {
 class BSObserver
 {
 public:
-	BSObserver();
-	BSObserver(const BSObserver& observer);
-	virtual ~BSObserver();
+	BSObserver() {}
+	BSObserver(const BSObserver& observer) {}
+	virtual ~BSObserver() {}
 	
 	BSObserver& operator = (const BSObserver& observer);
 
 	virtual void notify(BSNotification* pnotification) const = 0;
 	virtual bool equals(const BSObserver* pobserver) const = 0;
 	virtual bool accepts(BSNotification* pnotification) const = 0;
-	virtual BSNotification* clone() const = 0;
+	virtual BSObserver* clone() const = 0;
 	virtual void disable() = 0;
 };
 
 
-} // namespace Poco
+} // namespace basis
 
 
 #endif // _BASIS_OBSERVER_H_

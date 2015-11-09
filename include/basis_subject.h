@@ -29,4 +29,6 @@ private:
 
 } // namespace basis
 
+using namespace basis;
+
 #endif // _BASIS_SUBJECT_H_
