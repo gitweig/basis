@@ -43,6 +43,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -67,6 +68,10 @@
     <ClInclude Include="..\include\basis_observer.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\basis_subject.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

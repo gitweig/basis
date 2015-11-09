@@ -62,7 +62,7 @@ public:
 		return dynamic_cast<N*>(pnotification) != NULL;
 	}
 	
-	BSObserverExt* clone() const
+	BSObserver* clone() const
 	{
 		return new BSObserverExt(*this);
 	}
