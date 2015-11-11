@@ -63,12 +63,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\basis_atomic.h" />
     <ClInclude Include="..\include\basis_define.h" />
     <ClInclude Include="..\include\basis_notification.h" />
     <ClInclude Include="..\include\basis_observer.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
-    <ClInclude Include="basis_atomic.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_atomic.cpp" />

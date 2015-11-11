@@ -19,7 +19,7 @@ XAtomic32::XAtomic32(int32 i)
 }
 
 XAtomic32::XAtomic32(const XAtomic32& from)
-	: m_counter(from.m_counter)
+	: m_counter(from.get_value())
 {
 	//
 }
@@ -61,9 +61,12 @@ XAtomic32& XAtomic32::operator=(int32 i)
 	return *this;
 }
 
-XAtomic32& XAtomic32::operator=(const XAtomic32& form)
+XAtomic32& XAtomic32::operator=(const XAtomic32& from)
 {
-	this->set_value(form.get_value());
+	if (this != &from)
+	{
+		this->set_value(from.get_value());
+	}
 	return * this;
 }
 
@@ -110,7 +113,7 @@ XAtomic32::XAtomic32(int32 i)
 }
 
 XAtomic32::XAtomic32(const XAtomic32& from)
-	: m_counter(from.m_counter)
+	: m_counter(from.get_value())
 {
 	ASSERT(sizeof(int32) == sizeof(int32_t));
 }

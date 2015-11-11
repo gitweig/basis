@@ -24,7 +24,7 @@
     <ClInclude Include="..\include\basis_observer_ext.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="basis_atomic.h">
+    <ClInclude Include="..\include\basis_atomic.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
