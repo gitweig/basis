@@ -68,8 +68,10 @@
     <ClInclude Include="..\include\basis_observer.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
+    <ClInclude Include="basis_atomic.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\basis_atomic.cpp" />
     <ClCompile Include="..\src\basis_subject.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
