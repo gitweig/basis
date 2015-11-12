@@ -1,8 +1,3 @@
-// 2015-11-10
-// basis_atomic.h
-// 
-// 原子操作类
-
 #ifndef _BASIS_ATOMIC_H
 #define _BASIS_ATOMIC_H
 
@@ -10,23 +5,21 @@
 
 namespace basis
 {
-///////////////////////////////////////////////////////////////////////////////
-// class XAtomic32
-///////////////////////////////////////////////////////////////////////////////
-class XAtomic32
+
+class BSAtomic32
 {
 public:
-	XAtomic32(int32 i = 0);
-	XAtomic32(const XAtomic32& from);
-	~XAtomic32();
+	BSAtomic32(int32 i = 0);
+	BSAtomic32(const BSAtomic32& from);
+	~BSAtomic32();
 
 	int32 get_value() const;  // 返回当前值
 	int32 set_value(int32 i); // 返回原值
 	int32 test_zero_inc(); // 返回增量后的值
 
 	operator int32 ();
-	XAtomic32& operator=(int32 i);
-	XAtomic32& operator=(const XAtomic32& from);
+	BSAtomic32& operator=(int32 i);
+	BSAtomic32& operator=(const BSAtomic32& from);
 
 	int32 operator+= (int32 i); // 返回增量后的值
 	int32 operator-= (int32 i); // 返回减量后的值

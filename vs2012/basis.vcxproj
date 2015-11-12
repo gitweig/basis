@@ -67,6 +67,7 @@
     <ClInclude Include="..\include\basis_define.h" />
     <ClInclude Include="..\include\basis_notification.h" />
     <ClInclude Include="..\include\basis_observer.h" />
+    <ClInclude Include="..\include\basis_smart_ptr.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
   </ItemGroup>
