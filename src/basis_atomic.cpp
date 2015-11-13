@@ -1,45 +1,38 @@
-// 2015-11-10
-// basis_atomic.h
-// 
-// 原子操作类
 
 #include "basis_atomic.h"
 
 namespace basis 
 {
-///////////////////////////////////////////////////////////////////////////////
-// class XAtomic32
-///////////////////////////////////////////////////////////////////////////////
 #ifdef __WINDOWS__
 
-XAtomic32::XAtomic32(int32 i)
+BSAtomic32::BSAtomic32(int32 i)
 	: m_counter(i)
 {
 	//
 }
 
-XAtomic32::XAtomic32(const XAtomic32& from)
+BSAtomic32::BSAtomic32(const BSAtomic32& from)
 	: m_counter(from.get_value())
 {
 	//
 }
 
-XAtomic32::~XAtomic32()
+BSAtomic32::~BSAtomic32()
 {
 	// empty
 }
 
-int32 XAtomic32::get_value() const
+int32 BSAtomic32::get_value() const
 {
 	return InterlockedCompareExchange((volatile LONG*)&m_counter, 0, 0);
 }
 
-int32 XAtomic32::set_value(int32 i)
+int32 BSAtomic32::set_value(int32 i)
 {
 	return InterlockedExchange((LONG*)&m_counter, i);
 }
 
-int32 XAtomic32::test_zero_inc()
+int32 BSAtomic32::test_zero_inc()
 {
 	for (; ;)
 	{
@@ -50,18 +43,18 @@ int32 XAtomic32::test_zero_inc()
 	return 0;
 }
 
-XAtomic32::operator int32()
+BSAtomic32::operator int32()
 {
 	return get_value();
 }
 
-XAtomic32& XAtomic32::operator=(int32 i)
+BSAtomic32& BSAtomic32::operator=(int32 i)
 {
 	this->set_value(i);
 	return *this;
 }
 
-XAtomic32& XAtomic32::operator=(const XAtomic32& from)
+BSAtomic32& BSAtomic32::operator=(const BSAtomic32& from)
 {
 	if (this != &from)
 	{
@@ -70,32 +63,32 @@ XAtomic32& XAtomic32::operator=(const XAtomic32& from)
 	return * this;
 }
 
-int32 XAtomic32::operator+= (int32 i)
+int32 BSAtomic32::operator+= (int32 i)
 {
 	return InterlockedExchangeAdd((LONG*)&m_counter, i) + i;
 }
 
-int32 XAtomic32::operator-= (int32 i)
+int32 BSAtomic32::operator-= (int32 i)
 {
 	return InterlockedExchangeAdd((LONG*)&m_counter, -i) - i;
 }
 
-int32 XAtomic32::operator++ (int)
+int32 BSAtomic32::operator++ (int)
 {
 	return  InterlockedIncrement((LONG*)&m_counter) - 1;
 }
 
-int32 XAtomic32::operator-- (int)
+int32 BSAtomic32::operator-- (int)
 {
 	return InterlockedDecrement((LONG*)&m_counter) + 1;
 }
 
-int32 XAtomic32::operator++ ()
+int32 BSAtomic32::operator++ ()
 {
 	return InterlockedIncrement((LONG*)&m_counter);
 }
 
-int32 XAtomic32::operator-- ()
+int32 BSAtomic32::operator-- ()
 {
 	return InterlockedDecrement((LONG*)&m_counter);
 }
@@ -106,35 +99,35 @@ int32 XAtomic32::operator-- ()
 
 #ifdef __POSIX__
 
-XAtomic32::XAtomic32(int32 i)
+BSAtomic32::BSAtomic32(int32 i)
 	: m_counter(i)
 {
 	ASSERT(sizeof(int32) == sizeof(int32_t));
 }
 
-XAtomic32::XAtomic32(const XAtomic32& from)
+BSAtomic32::BSAtomic32(const BSAtomic32& from)
 	: m_counter(from.get_value())
 {
 	ASSERT(sizeof(int32) == sizeof(int32_t));
 }
 
-XAtomic32::~XAtomic32()
+BSAtomic32::~BSAtomic32()
 {
 	// empty
 }
 
-int32 XAtomic32::get_value() const
+int32 BSAtomic32::get_value() const
 {
 	return __sync_val_compare_and_swap((volatile int*)&m_counter, 0, 0);
 }
 
-int32 XAtomic32::set_value(int32 i)
+int32 BSAtomic32::set_value(int32 i)
 {
 	// set m_counter = i and return old value of m_counter
 	return __sync_lock_test_and_set(&m_counter, i);
 }
 
-int32 XAtomic32::test_zero_inc()
+int32 BSAtomic32::test_zero_inc()
 {
 	// if (m_counter != 0) ++m_counter; return m_counter;
 
@@ -147,18 +140,18 @@ int32 XAtomic32::test_zero_inc()
 	return 0;
 }
 
-XAtomic32::operator int32()
+BSAtomic32::operator int32()
 {
 	return get_value();
 }
 
-XAtomic32& XAtomic32::operator= (int32 i)
+BSAtomic32& BSAtomic32::operator= (int32 i)
 {
 	this->set_value(i);
 	return *this;
 }
 
-XAtomic32& XAtomic32::operator= (const XAtomic32& from)
+BSAtomic32& BSAtomic32::operator= (const BSAtomic32& from)
 {
 	if (this != &from)
 	{
@@ -167,32 +160,32 @@ XAtomic32& XAtomic32::operator= (const XAtomic32& from)
 	return *this;
 }
 
-int32 XAtomic32::operator+= (int32 i)
+int32 BSAtomic32::operator+= (int32 i)
 {
 	return __sync_add_and_fetch(&m_counter, i);
 }
 
-int32 XAtomic32::operator-= (int32 i)
+int32 BSAtomic32::operator-= (int32 i)
 {
 	return __sync_sub_and_fetch(&m_counter, i);
 }
 
-int32 XAtomic32::operator++ (int)
+int32 BSAtomic32::operator++ (int)
 {
 	return __sync_fetch_and_add(&m_counter, 1);
 }
 
-int32 XAtomic32::operator-- (int)
+int32 BSAtomic32::operator-- (int)
 {
 	return __sync_fetch_and_sub(&m_counter, 1);
 }
 
-int32 XAtomic32::operator++ ()
+int32 BSAtomic32::operator++ ()
 {
 	return __sync_add_and_fetch(&m_counter, 1);
 }
 
-int32 XAtomic32::operator-- ()
+int32 BSAtomic32::operator-- ()
 {
 	return __sync_sub_and_fetch(&m_counter, 1);
 }

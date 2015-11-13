@@ -5,18 +5,37 @@
 #include "basis_subject.h"
 #include "basis_md5.h"
 #include <iostream>
-using namespace std;
+#include "basis_smart_ptr.h"
+#include "stdio.h"
+
+class TestA
+{
+public:
+	TestA() 
+	{
+		printf("construct\n");
+	}
+
+	~TestA()
+	{
+		printf("destruct\n");
+	}
+};
 
 int main()
 {
-	uint32 start_ = time(0);
-	for (uint32 i = 0; i < 2000; ++i)
+	basis::weak_ptr<TestA> b, c;
 	{
-		string str("abc");
-		MD5 md5;
-		md5.update(str);
-		cout << md5.toString() << endl;
+		basis::shared_ptr<TestA> a = shared_ptr<TestA>(new TestA);
+		b = a;
+		c = b;
+		bool expried = b.expired();
+		bool expriedc = c.expired();
+		int e = expried;
 	}
-	cout << (start_ - time(0)) << endl;
+	
+	bool expried = b.expired();
+	bool expriedc = c.expired();
+
 	return 0;
 }

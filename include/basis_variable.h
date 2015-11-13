@@ -7,17 +7,6 @@
 
 namespace basis {
 
-class BSVarHolder;
-
-class BSVariable
-{
-public:
-	template <typename T> 
-	BSVariable(const T& val)
-	{
-
-	}
-
 
 };
 

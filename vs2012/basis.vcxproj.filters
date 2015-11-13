@@ -28,6 +28,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\basis_md5.h">
+	      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_smart_ptr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_checked_delete.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

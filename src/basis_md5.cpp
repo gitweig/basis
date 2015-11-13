@@ -139,7 +139,7 @@ void MD5::update(const uint8 *input, uint32 length)
 	memcpy(&m_buffer[index], &input[i], length-i);
 }
 
-/* Updating the context with a file. */
+// Updating the context with a file.
 void MD5::update(ifstream& in)
 {
 	if (!in) return;
@@ -288,8 +288,10 @@ void MD5::decode(const uint8 *input, uint32 *output, uint32 length)
 {
 	for(size_t i=0, j=0; j<length; i++, j+=4) 
 	{	
-		output[i] = ((uint32)input[j]) | (((uint32)input[j+1]) << 8) |
-			(((uint32)input[j+2]) << 16) | (((uint32)input[j+3]) << 24);
+		output[i] = ((uint32)input[j]) 
+			| (((uint32)input[j+1]) << 8) 
+			| (((uint32)input[j+2]) << 16) 
+			| (((uint32)input[j+3]) << 24);
 	}
 }
 
