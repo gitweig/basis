@@ -12,7 +12,9 @@ int main()
 	uint32 start_ = time(0);
 	for (uint32 i = 0; i < 2000; ++i)
 	{
-		MD5 md5("a");
+		string str("abc");
+		MD5 md5;
+		md5.update(str);
 		cout << md5.toString() << endl;
 	}
 	cout << (start_ - time(0)) << endl;

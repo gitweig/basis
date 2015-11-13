@@ -72,20 +72,6 @@ MD5::MD5()
 	reset();
 }
 
-//Construct a MD5 object with a input buffer. 
-MD5::MD5(const void *input, uint32 length) 
-{
-	reset();
-	update(input, length);
-}
-
-// Construct a MD5 object with a string. 
-MD5::MD5(const string &str) 
-{
-	reset();
-	update(str);
-}
-
 // Return the message-digest 
 const uint8* MD5::digest() 
 {

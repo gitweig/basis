@@ -17,11 +17,10 @@ class MD5
 {
 public:
 	MD5();
-	MD5(const void *input, uint32 length);
-	MD5(const string& str);
 
 	void update(const void *input, uint32 length);
 	void update(const string &str);
+	
 	const uint8* digest();
 	string toString();
 	void reset();
