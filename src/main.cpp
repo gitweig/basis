@@ -3,9 +3,18 @@
 #include "basis_observer.h"
 #include "basis_observer_ext.h"
 #include "basis_subject.h"
+#include "basis_md5.h"
+#include <iostream>
+using namespace std;
 
 int main()
 {
-	BSSubject aaa;
-	return 2;
+	uint32 start_ = time(0);
+	for (uint32 i = 0; i < 2000; ++i)
+	{
+		MD5 md5("a");
+		cout << md5.toString() << endl;
+	}
+	cout << (start_ - time(0)) << endl;
+	return 0;
 }
