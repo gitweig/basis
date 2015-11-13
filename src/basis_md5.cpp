@@ -139,6 +139,21 @@ void MD5::update(const uint8 *input, uint32 length)
 	memcpy(&m_buffer[index], &input[i], length-i);
 }
 
+/* Updating the context with a file. */
+void MD5::update(ifstream& in)
+{
+	if (!in) return;
+	std::streamsize length;
+	char buffer[2048];
+	while (!in.eof()) {
+		in.read(buffer, 2048);
+		length = in.gcount();
+		if (length > 0)
+			update(buffer, length);
+	}
+	in.close();
+}
+
 // MD5 finalization. Ends an MD5 message-_digest operation, writing the message _digest and zeroizing the context.
 
 void MD5::final() 

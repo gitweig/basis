@@ -6,6 +6,7 @@
 #ifndef _BASIS_MD5_H_
 #define _BASIS_MD5_H_
 
+#include <fstream>
 #include "basis_define.h"
 
 namespace basis
@@ -20,6 +21,7 @@ public:
 
 	void update(const void *input, uint32 length);
 	void update(const string &str);
+	void update(ifstream &in);
 	
 	const uint8* digest();
 	string toString();
