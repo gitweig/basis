@@ -27,6 +27,9 @@
     <ClInclude Include="..\include\basis_atomic.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_md5.h">
+	      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\basis_smart_ptr.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -42,6 +45,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_atomic.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_md5.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

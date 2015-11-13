@@ -3,6 +3,8 @@
 #include "basis_observer.h"
 #include "basis_observer_ext.h"
 #include "basis_subject.h"
+#include "basis_md5.h"
+#include <iostream>
 #include "basis_smart_ptr.h"
 #include "stdio.h"
 
@@ -35,6 +37,5 @@ int main()
 	bool expried = b.expired();
 	bool expriedc = c.expired();
 
-	
 	return 0;
 }
