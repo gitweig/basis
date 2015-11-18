@@ -275,7 +275,7 @@ void MD5::transform(const uint8 block[64])
 void MD5::encode(const uint32 *input, uint8* output, uint32 length) 
 {
 	for(uint32 i=0, j=0; j<length; i++, j+=4) {
-		output[j]= (uint8)(input[i] & 0xff);
+		output[j+0] = (uint8)(input[i] & 0xff);
 		output[j+1] = (uint8)((input[i] >> 8) & 0xff);
 		output[j+2] = (uint8)((input[i] >> 16) & 0xff);
 		output[j+3] = (uint8)((input[i] >> 24) & 0xff);
@@ -298,7 +298,7 @@ void MD5::decode(const uint8 *input, uint32 *output, uint32 length)
 // Convert byte array to hex string.
 string MD5::bytesToHexString(const uint8 *input, uint32 length) 
 {
-	char buf[33];
+	char buf[33] = {0};
 
 	for (int i = 0; i < 16; i++)
 	{

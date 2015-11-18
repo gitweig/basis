@@ -1,5 +1,5 @@
-#ifndef _BASIS_ATOMIC_H
-#define _BASIS_ATOMIC_H
+#ifndef _BASIS_ATOMIC_H_
+#define _BASIS_ATOMIC_H_
 
 #include "basis_define.h"
 
@@ -35,5 +35,5 @@ private:
 
 using namespace basis;
 
-#endif //_BASIS_ATOMIC_
+#endif //_BASIS_ATOMIC_H_
 

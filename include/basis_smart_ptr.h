@@ -4,8 +4,6 @@
 #include "basis_atomic.h"
 #include "basis_checked_delete.h"
 
-#define ASSERT(x) x
-
 namespace basis {
 	
 namespace detail {

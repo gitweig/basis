@@ -28,12 +28,21 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\basis_md5.h">
-	      <Filter>include</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\basis_smart_ptr.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\basis_checked_delete.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_critical.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_macro.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_mutex.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -48,6 +57,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_md5.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_critical.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_mutex.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
