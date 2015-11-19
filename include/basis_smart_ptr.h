@@ -383,6 +383,7 @@ inline T * get_pointer(scoped_ptr<T> const & p)
 	return p.get();
 }
 
+template<class T> class shared_ptr;
 template<class T>
 class weak_ptr
 {
