@@ -4,3 +4,4 @@ vs2012/basis.opensdf
 *.sdf
 vs2012/basis.vcxproj.user
 *.suo
+/cmake
