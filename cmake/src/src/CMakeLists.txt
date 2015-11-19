@@ -5,6 +5,6 @@ aux_source_directory("${PROJECT_ROOT_PATH}/include/" HPP)
 #file(GLOB SOURCES "${PROJECT_ROOT_PATH}/src/*.cpp") 
 
 add_executable(basis ${HPP} ${SOURCE})
-link_libraries(basis pthread)
+target_link_libraries(basis pthread)
 
    
