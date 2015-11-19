@@ -463,13 +463,13 @@ public:
 	template<class Y>
 	bool owner_before( weak_ptr<Y> const & rhs ) const
 	{
-		return pn < rhs.pn;
+		return m_ < rhs.m_pn;
 	}
 
 	template<class Y>
 	bool owner_before( shared_ptr<Y> const & rhs ) const 
 	{
-		return pn < rhs.pn;
+		return m_pn < rhs.m_pn;
 	}
 
 };  // weak_ptr
