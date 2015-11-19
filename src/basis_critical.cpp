@@ -53,7 +53,10 @@ void BSCritical::CriticalImpl::unlock()
 
 #ifdef __POSIX__
 
-typedef BSMutex BSCritical::CriticalImpl;
+//typedef BSMutex BSCritical::CriticalImpl;
+class BSCritical::CriticalImpl : public BSMutex
+{
+};
 
 #endif//__POSIX__
 
