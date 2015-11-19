@@ -24,18 +24,9 @@ public:
 
 int main()
 {
-	basis::weak_ptr<TestA> b, c;
-	{
-		basis::shared_ptr<TestA> a = shared_ptr<TestA>(new TestA);
-		b = a;
-		c = b;
-		bool expried = b.expired();
-		bool expriedc = c.expired();
-		int e = expried;
-	}
-	
-	bool expried = b.expired();
-	bool expriedc = c.expired();
+	string str("a");
+	MD5 md5;	
+	cout << md5.update(str) << endl;
 
 	return 0;
 }
