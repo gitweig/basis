@@ -42,11 +42,5 @@ int main()
 	md5.update(aaa, strlen(aaa));
 	string result = md5.toString();
 
-	HANDLE mutex_ = OpenMutex(MUTEX_ALL_ACCESS, false, "test");
-
-	uint32 ret = WaitForSingleObject(mutex_, -1);
-
-	ReleaseMutex(mutex_);
-
 	return 0;
 }
