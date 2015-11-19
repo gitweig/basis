@@ -53,7 +53,7 @@ void BSCritical::CriticalImpl::unlock()
 
 #ifdef __POSIX__
 
-typedef BSMutex BSCritical;
+typedef BSMutex BSCritical::CriticalImpl;
 
 #endif//__POSIX__
 
