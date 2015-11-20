@@ -24,9 +24,5 @@ public:
 
 int main()
 {
-	string str("a");
-	MD5 md5;	
-	cout << md5.update(str) << endl;
-
 	return 0;
 }

@@ -93,7 +93,7 @@ string MD5::update(const string &str)
 
 string MD5::update(const void *input, uint32 length) 
 {
-	update((const byte*)input, length);
+	update((const uint8*)input, length);
 	return final();
 }
 
@@ -105,7 +105,7 @@ string MD5::updatefile(const string& filepath)
 	MD5 md5;
 	while (true)
 	{
-		size_t ret = fread(buf, 1, 2048, fd);
+		uint32 ret = fread(buf, 1, 2048, fd);
 		if (ret == 0) break;
 		md5.update(buf, (uint32)ret);
 	}
