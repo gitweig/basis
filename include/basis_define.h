@@ -116,4 +116,6 @@ typedef int                  HANDLE;
 #define __stdcall
 #endif//__POSIX__
 
+#include "basis_macro.h"
+
 #endif //_BASIS_DEFINE_H_

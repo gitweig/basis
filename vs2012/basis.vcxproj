@@ -63,15 +63,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\basis_atomic.h" />
+    <ClInclude Include="..\include\basis_checked_delete.h" />
+    <ClInclude Include="..\include\basis_critical.h" />
     <ClInclude Include="..\include\basis_define.h" />
     <ClInclude Include="..\include\basis_json.h" />
+    <ClInclude Include="..\include\basis_macro.h" />
+    <ClInclude Include="..\include\basis_md5.h" />
+    <ClInclude Include="..\include\basis_mutex.h" />
     <ClInclude Include="..\include\basis_notification.h" />
     <ClInclude Include="..\include\basis_observer.h" />
+    <ClInclude Include="..\include\basis_smart_ptr.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_json.cpp" />
+    <ClCompile Include="..\src\basis_atomic.cpp" />
+    <ClCompile Include="..\src\basis_critical.cpp" />
+    <ClCompile Include="..\src\basis_md5.cpp" />
+    <ClCompile Include="..\src\basis_mutex.cpp" />
     <ClCompile Include="..\src\basis_subject.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
