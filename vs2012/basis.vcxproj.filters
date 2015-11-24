@@ -24,12 +24,18 @@
     <ClInclude Include="..\include\basis_observer_ext.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_json.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_subject.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_json.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -64,12 +64,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\basis_define.h" />
+    <ClInclude Include="..\include\basis_json.h" />
     <ClInclude Include="..\include\basis_notification.h" />
     <ClInclude Include="..\include\basis_observer.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\basis_json.cpp" />
     <ClCompile Include="..\src\basis_subject.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
