@@ -4,8 +4,6 @@
 #include "basis_atomic.h"
 #include "basis_checked_delete.h"
 
-#define ASSERT(x) x
-
 namespace basis {
 	
 namespace detail {
@@ -385,6 +383,7 @@ inline T * get_pointer(scoped_ptr<T> const & p)
 	return p.get();
 }
 
+template<class T> class shared_ptr;
 template<class T>
 class weak_ptr
 {
@@ -464,13 +463,13 @@ public:
 	template<class Y>
 	bool owner_before( weak_ptr<Y> const & rhs ) const
 	{
-		return pn < rhs.pn;
+		return m_pn < rhs.m_pn;
 	}
 
 	template<class Y>
 	bool owner_before( shared_ptr<Y> const & rhs ) const 
 	{
-		return pn < rhs.pn;
+		return m_pn < rhs.m_pn;
 	}
 
 };  // weak_ptr

@@ -39,6 +39,7 @@
 #include <set>
 #include <map>
 #include <algorithm>
+#include <assert.h>
 using namespace std;
 
 #ifdef __WINDOWS__
@@ -114,5 +115,7 @@ typedef int                  HANDLE;
 #define SOCKET_ERROR         (-1)
 #define __stdcall
 #endif//__POSIX__
+
+#include "basis_macro.h"
 
 #endif //_BASIS_DEFINE_H_
