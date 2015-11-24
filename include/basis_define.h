@@ -39,6 +39,7 @@
 #include <set>
 #include <map>
 #include <algorithm>
+#include <assert.h>
 using namespace std;
 
 #ifdef __WINDOWS__
