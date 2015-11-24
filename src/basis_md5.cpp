@@ -72,13 +72,6 @@ MD5::MD5()
 	reset();
 }
 
-// Return the message-digest 
-const uint8* MD5::digest() 
-{
-	final();
-	return m_digest;
-}
-
 // Reset the calculate state 
 void MD5::reset() 
 {
@@ -91,16 +84,33 @@ void MD5::reset()
 	m_state[3] = 0x10325476;
 }
 
-// Updating the context with a input buffer.
-void MD5::update(const void *input, uint32 length) 
+// Updating the context with a string. 
+string MD5::update(const string &str) 
 {
-	update((const uint8*)input, length);
+	update((const byte*)str.c_str(), str.length());
+	return final();
 }
 
-// Updating the context with a string. 
-void MD5::update(const string &str) 
+string MD5::update(const void *input, uint32 length) 
 {
-	update((const uint8*)str.c_str(), str.length());
+	update((const uint8*)input, length);
+	return final();
+}
+
+string MD5::updatefile(const string& filepath)
+{
+	FILE* fd = fopen(filepath.c_str(), "rb");
+	if (fd == NULL) return "";
+	uint8 buf[2048];
+	MD5 md5;
+	while (true)
+	{
+		uint32 ret = fread(buf, 1, 2048, fd);
+		if (ret == 0) break;
+		md5.update(buf, (uint32)ret);
+	}
+	fclose(fd);
+	return final();
 }
 
 // MD5 block update operation. Continues an MD5 message-digest
@@ -139,25 +149,12 @@ void MD5::update(const uint8 *input, uint32 length)
 	memcpy(&m_buffer[index], &input[i], length-i);
 }
 
-// Updating the context with a file.
-void MD5::update(ifstream& in)
-{
-	if (!in) return;
-	std::streamsize length;
-	char buffer[2048];
-	while (!in.eof()) {
-		in.read(buffer, 2048);
-		length = in.gcount();
-		if (length > 0)
-			update(buffer, length);
-	}
-	in.close();
-}
-
 // MD5 finalization. Ends an MD5 message-_digest operation, writing the message _digest and zeroizing the context.
 
-void MD5::final() 
+string MD5::final() 
 {
+	char buf[33];
+	uint8 digest[16];
 	uint8 bits[8];
 	uint32 oldState[4];
 	uint32 oldCount[2];
@@ -179,11 +176,18 @@ void MD5::final()
 	update(bits, 8);
 
 	// Store state in digest 
-	encode(m_state, m_digest, 16);
+	encode(m_state, digest, 16);
 
 	// Restore current state and count.
 	memcpy(m_state, oldState, 16);
 	memcpy(m_count, oldCount, 8);
+	
+	for (int i = 0; i < 16; i++)
+	{
+		sprintf(buf + i * 2, "%02X", digest[i]);
+	}
+	buf[32] = '\0';
+	return buf;
 }
 
 // MD5 basic transformation. Transforms m_state based on block.
@@ -294,26 +298,5 @@ void MD5::decode(const uint8 *input, uint32 *output, uint32 length)
 			| (((uint32)input[j+3]) << 24);
 	}
 }
-
-// Convert byte array to hex string.
-string MD5::bytesToHexString(const uint8 *input, uint32 length) 
-{
-	char buf[33] = {0};
-
-	for (int i = 0; i < 16; i++)
-	{
-		sprintf(buf + i * 2, "%02X", input[i]);
-	}
-	buf[32] = '\0';
-	return buf;
-
-}
-
-// Convert digest to string value 
-string MD5::toString() 
-{
-	return bytesToHexString(digest(), 16);
-}
-
 
 }//namespace basis
