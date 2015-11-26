@@ -21,9 +21,7 @@ public:
 		kUint64,
 		kDouble,
 		kString,
-		kBlob,
 		kVector,
-		kList,
 		kMap,
 		kUserDef, 
 	};
@@ -83,7 +81,7 @@ public:
 public:
 
 	template< typename T >
-	static const T & extract_def(BSVarHolder* p);
+	static T & extract_def(BSVarHolder* p);
 
 	template< typename T >
 	static bool extract(BSVarHolder* p, T & v);
@@ -114,7 +112,7 @@ bool basis::BSVarHolder::extract( BSVarHolder* p, T & v )
 }
 
 template< typename T >
-const T & basis::BSVarHolder::extract_def( BSVarHolder* p )
+T & basis::BSVarHolder::extract_def( BSVarHolder* p )
 {
 	BSVarHolderImpl< T > * pd = NULL;
 	try
@@ -161,7 +159,7 @@ public:
 		return BSVarType(BSVarType::kUserDef);
 	}
 
-	const T & value()
+	T & value()
 	{
 		return m_value; 
 	}
@@ -209,7 +207,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const uint8 & value() 
+	uint8 & value() 
 	{
 		return m_value;
 	}
@@ -298,7 +296,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const int8 & value() 
+	int8 & value() 
 	{
 		return m_value;
 	}
@@ -387,7 +385,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const uint16 & value() 
+	uint16 & value() 
 	{
 		return m_value;
 	}
@@ -476,7 +474,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const int16 & value() 
+	int16 & value() 
 	{
 		return m_value;
 	}
@@ -565,7 +563,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const uint32 & value() 
+	uint32 & value() 
 	{
 		return m_value;
 	}
@@ -654,7 +652,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const int32 & value() 
+	int32 & value() 
 	{
 		return m_value;
 	}
@@ -744,7 +742,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const int64 & value() 
+	int64 & value() 
 	{
 		return m_value;
 	}
@@ -833,7 +831,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const uint64 & value() 
+	uint64 & value() 
 	{
 		return m_value;
 	}
@@ -922,7 +920,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const string & value() 
+	string & value() 
 	{
 		return m_value;
 	}
@@ -941,7 +939,7 @@ public:
 	virtual ~BSVarHolderImpl() {}
 
 public:
-	virtual bool isString()
+	virtual bool isVector()
 	{
 		return true; 
 	}
@@ -956,41 +954,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const vector< T > & value() 
-	{
-		return m_value;
-	}
-};
-
-//////////////////////////////////////////////////////////////////////////
-template<typename T>
-class BSVarHolderImpl< list< T > > : public BSVarHolder
-{
-private:
-	list<T> m_value;
-
-public:
-	BSVarHolderImpl(const list< T >& value) : m_value(value) {}
-	BSVarHolderImpl(const BSVarHolderImpl< list< T > >& r) : m_value(r.m_value) {}
-	virtual ~BSVarHolderImpl() {}
-
-public:
-	virtual bool isString()
-	{
-		return true; 
-	}
-
-	virtual BSVarType type()
-	{
-		return BSVarType(BSVarType::kList);
-	}
-
-	virtual BSVarHolder* clone()
-	{
-		return clone_impl(*this);
-	}
-
-	const list< T > & value() 
+	vector< T > & value() 
 	{
 		return m_value;
 	}
@@ -1009,7 +973,7 @@ public:
 	virtual ~BSVarHolderImpl() {}
 
 public:
-	virtual bool isString()
+	virtual bool isMap()
 	{
 		return true; 
 	}
@@ -1024,7 +988,7 @@ public:
 		return clone_impl(*this);
 	}
 
-	const map< K, V > & value() 
+	map< K, V > & value() 
 	{
 		return m_value;
 	}

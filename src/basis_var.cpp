@@ -5,8 +5,8 @@ namespace basis
 {
 
 BSVar::BSVar( const BSVar& var )
-	: m_holder(var.m_holder->clone())
-{
+	: m_holder( var.m_holder ? var.m_holder->clone() : 0)
+{	
 }
 
 BSVar& BSVar::operator=( const BSVar& var )

@@ -1,29 +1,21 @@
 #include "basis_var.h"
 #include <iostream>
 
+using namespace basis;
+
 int main()
 {
-	uint8 t = 8, p = 9, q = 0;
-	basis::BSVar aa(t);
-	basis::BSVar bb(p);
-	t = aa.extract_def<int8>();
-	aa.extract(q);
-	uint32 value = 0;
-	bool bl = aa.convert(value);
+	BSVar str(string("123445"));
+	BSVar tt(10);
 
-	p = (int8)aa;
+	map<string, BSVar> map_;
+	map_["str"] = str;
+	map_["tt"] = tt;
+	BSVar map_value(map_);
 
-	string s = "aaa";
-	basis::BSVar ss(s);
-	ss.extract_def<uint32>();
-	ss.extract_def<vector<uint32> >();
+	bool ismap = map_value.isMap();
 
-	map<uint32, string> kk;
-	basis::BSVar tt(kk);
-
-	aa.isInterger();
-
-	ss = aa;
+	const map<string, BSVar>& d = map_value.extract_def< map<string, BSVar> >();
 
 	return 0;
 }

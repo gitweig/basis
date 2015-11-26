@@ -34,7 +34,7 @@ public:
 	operator T () const;
 
 	template< typename T >
-	const T & extract_def() const;
+	T & extract_def() const;
 
 	template< typename T >
 	bool extract(T& value) const;
@@ -57,7 +57,7 @@ bool basis::BSVar::extract( T& value ) const
 }
 
 template<typename T>
-const T & basis::BSVar::extract_def() const
+T & basis::BSVar::extract_def() const
 {
 	ASSERT(m_holder);
 	return BSVarHolder::extract_def<T>(m_holder);
