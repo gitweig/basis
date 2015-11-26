@@ -76,7 +76,8 @@
     <ClInclude Include="..\include\basis_smart_ptr.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
-    <ClInclude Include="..\include\basis_variable.h" />
+    <ClInclude Include="..\include\basis_var.h" />
+    <ClInclude Include="..\include\basis_var_holder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_json.cpp" />
@@ -85,7 +86,7 @@
     <ClCompile Include="..\src\basis_md5.cpp" />
     <ClCompile Include="..\src\basis_mutex.cpp" />
     <ClCompile Include="..\src\basis_subject.cpp" />
-    <ClCompile Include="..\src\basis_variable.cpp" />
+    <ClCompile Include="..\src\basis_var.cpp" />
     <ClCompile Include="..\src\test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

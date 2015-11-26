@@ -48,7 +48,10 @@
     <ClInclude Include="..\include\basis_mutex.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\basis_variable.h">
+    <ClInclude Include="..\include\basis_var.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_var_holder.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,10 +74,10 @@
     <ClCompile Include="..\src\basis_mutex.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\basis_variable.cpp">
+    <ClCompile Include="..\src\test.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\test.cpp">
+    <ClCompile Include="..\src\basis_var.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

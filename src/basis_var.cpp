@@ -1,4 +1,4 @@
-#include "basis_variable.h"
+#include "basis_var.h"
 #include "basis_checked_delete.h"
 
 namespace basis 
