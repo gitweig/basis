@@ -67,23 +67,83 @@ public:
 	virtual bool isList() { return false; }
 	virtual bool isMap() { return false; }
 
+	virtual bool convert(int8 & v);
+	virtual bool convert(uint8 & v);
+	virtual bool convert(int16 & v);
+	virtual bool convert(uint16 & v);
+	virtual bool convert(int32 & v);
+	virtual bool convert(uint32 & v);
+	virtual bool convert(uint64 & v);
+	virtual bool convert(int64 & v);
+	virtual bool convert(string & v);
+	
 	virtual BSVarType type() { return BSVarType(BSVarType::kNil); }
 	virtual BSVarHolder* clone() = 0;
 
+public:
+
+	template< typename T >
+	static const T & extract_def(BSVarHolder* p);
+
+	template< typename T >
+	static bool extract(BSVarHolder* p, T & v);
+
 protected:
-	template<typename T>
-	static BSVarHolder* clone_impl(const BSVarHolderImpl<T>& value);
+	template< typename T >
+	static BSVarHolder* clone_impl(const BSVarHolderImpl< T >& value);
 };
 
-template<typename T>
-BSVarHolder* basis::BSVarHolder::clone_impl(const BSVarHolderImpl<T>& value)
+template< typename T >
+bool basis::BSVarHolder::extract( BSVarHolder* p, T & v )
 {
-	BSVarHolder* p = new(nothrow) BSVarHolderImpl<T>(value);
+	BSVarHolderImpl< T > * pd = NULL;
+	try
+	{
+		pd = dynamic_cast< BSVarHolderImpl< T >* > (p);
+	}
+	catch (...)
+	{
+		pd = NULL;
+	}
+	if (pd)
+	{
+		v = pd->value();
+		return true;
+	}
+	return false;	
+}
+
+template< typename T >
+const T & basis::BSVarHolder::extract_def( BSVarHolder* p )
+{
+	BSVarHolderImpl< T > * pd = NULL;
+	try
+	{
+		pd = dynamic_cast< BSVarHolderImpl< T >* > (p);
+	}
+	catch (...)
+	{
+		pd = NULL;
+	}
+
+	if (pd == NULL)
+	{
+		ASSERT(false);
+		static T tmp;
+		return tmp;
+	}
+	return pd->value();	
+}
+
+template< typename T >
+BSVarHolder* basis::BSVarHolder::clone_impl(const BSVarHolderImpl< T >& value)
+{
+	BSVarHolder* p = new(nothrow) BSVarHolderImpl< T >(value);
 	return p;
 }
 
 //////////////////////////////////////////////////////////////////////////
-template<typename T>
+template< typename T >
 class BSVarHolderImpl : public BSVarHolder
 {
 public:
@@ -101,7 +161,10 @@ public:
 		return BSVarType(BSVarType::kUserDef);
 	}
 
-	const T & value() { return m_value; }
+	const T & value()
+	{
+		return m_value; 
+	}
 
 private:
 	T m_value;	
@@ -116,9 +179,19 @@ private:
 	uint8 m_value;
 
 public:
-	BSVarHolderImpl(const uint8& value) : m_value(value) {}
-	BSVarHolderImpl(const BSVarHolderImpl< uint8 >& r) : m_value(r.m_value) {}
-	virtual ~BSVarHolderImpl() {}
+	BSVarHolderImpl(const uint8& value)
+		: m_value(value) 
+	{
+	}
+
+	BSVarHolderImpl(const BSVarHolderImpl< uint8 >& r)
+		: m_value(r.m_value)
+	{
+	}
+
+	virtual ~BSVarHolderImpl()
+	{
+	}
 
 public:
 	virtual bool isInterger()
@@ -139,6 +212,61 @@ public:
 	const uint8 & value() 
 	{
 		return m_value;
+	}
+
+public:
+	virtual bool convert( int8 & v )
+	{
+		v = (int8)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint8 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int16 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint16 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( string & v )
+	{
+		//v = m_value;
+		return true;
 	}
 };
 
@@ -174,6 +302,61 @@ public:
 	{
 		return m_value;
 	}
+
+public:
+	virtual bool convert( int8 & v )
+	{
+		v = (int8)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint8 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int16 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint16 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( string & v )
+	{
+		//v = m_value; // ?????
+		return true;
+	}
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -207,6 +390,61 @@ public:
 	const uint16 & value() 
 	{
 		return m_value;
+	}
+
+public:
+	virtual bool convert( int8 & v )
+	{
+		v = (int8)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint8 & v )
+	{
+		v = (uint8)m_value;
+		return true;
+	}
+
+	virtual bool convert( int16 & v )
+	{
+		v = (int16)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint16 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( string & v )
+	{
+		//v = m_value; // ?????
+		return true;
 	}
 };
 
@@ -242,6 +480,61 @@ public:
 	{
 		return m_value;
 	}
+
+public:
+	virtual bool convert( int8 & v )
+	{
+		v = (int8)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint8 & v )
+	{
+		v = (uint8)m_value;
+		return true;
+	}
+
+	virtual bool convert( int16 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint16 & v )
+	{
+		v = (uint16)m_value;
+		return true;
+	}
+
+	virtual bool convert( int32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( string & v )
+	{
+		//v = m_value; // ?????
+		return true;
+	}
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -275,6 +568,61 @@ public:
 	const uint32 & value() 
 	{
 		return m_value;
+	}
+
+public:
+	virtual bool convert( int8 & v )
+	{
+		v = (int8)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint8 & v )
+	{
+		v = (uint8)m_value;
+		return true;
+	}
+
+	virtual bool convert( int16 & v )
+	{
+		v = (int16)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint16 & v )
+	{
+		v = (uint16)m_value;
+		return true;
+	}
+
+	virtual bool convert( int32 & v )
+	{
+		v = (uint32)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( string & v )
+	{
+		//v = m_value; // ?????
+		return true;
 	}
 };
 
@@ -310,6 +658,62 @@ public:
 	{
 		return m_value;
 	}
+
+public:
+	virtual bool convert( int8 & v )
+	{
+		v = (int8)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint8 & v )
+	{
+		v = (uint8)m_value;
+		return true;
+	}
+
+	virtual bool convert( int16 & v )
+	{
+		v = (int16)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint16 & v )
+	{
+		v = (uint16)m_value;
+		return true;
+	}
+
+	virtual bool convert( int32 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( uint32 & v )
+	{
+		v = (uint32)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( string & v )
+	{
+		//v = m_value; // ?????
+		return true;
+	}
+
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -344,6 +748,61 @@ public:
 	{
 		return m_value;
 	}
+
+public:
+	virtual bool convert( int8 & v )
+	{
+		v = (int8)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint8 & v )
+	{
+		v = (uint8)m_value;
+		return true;
+	}
+
+	virtual bool convert( int16 & v )
+	{
+		v = (int16)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint16 & v )
+	{
+		v = (uint16)m_value;
+		return true;
+	}
+
+	virtual bool convert( int32 & v )
+	{
+		v = (int32)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint32 & v )
+	{
+		v = (uint32)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint64 & v )
+	{
+		v = (uint64)m_value;
+		return true;
+	}
+
+	virtual bool convert( int64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( string & v )
+	{
+		//v = m_value; // ?????
+		return true;
+	}
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -377,6 +836,61 @@ public:
 	const uint64 & value() 
 	{
 		return m_value;
+	}
+
+public:
+	virtual bool convert( int8 & v )
+	{
+		v = (int8)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint8 & v )
+	{
+		v = (uint8)m_value;
+		return true;
+	}
+
+	virtual bool convert( int16 & v )
+	{
+		v = (int16)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint16 & v )
+	{
+		v = (uint16)m_value;
+		return true;
+	}
+
+	virtual bool convert( int32 & v )
+	{
+		v = (int32)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint32 & v )
+	{
+		v = (uint32)m_value;
+		return true;
+	}
+
+	virtual bool convert( uint64 & v )
+	{
+		v = m_value;
+		return true;
+	}
+
+	virtual bool convert( int64 & v )
+	{
+		v = (int64)m_value;
+		return true;
+	}
+
+	virtual bool convert( string & v )
+	{
+		//v = m_value; // ?????
+		return true;
 	}
 };
 

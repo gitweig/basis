@@ -95,4 +95,61 @@ BSVarType BSVar::type() const
 	return BSVarType(BSVarType::kNil);
 }
 
+//////////////////////////////////////////////////////////////////////////
+bool BSVarHolder::convert( int8 & v )
+{
+	v = 0;
+	return false;
+}
+
+bool BSVarHolder::convert( uint8 & v )
+{
+	v = 0;
+	return false;
+}
+
+bool BSVarHolder::convert( int16 & v )
+{
+	v = 0;
+	return false;
+}
+
+bool BSVarHolder::convert( uint16 & v )
+{
+	v = 0;
+	return false;
+}
+
+bool BSVarHolder::convert( int32 & v )
+{
+	v = 0;
+	return false;
+}
+
+bool BSVarHolder::convert( uint32 & v )
+{
+	v = 0;
+	return false;
+}
+
+bool BSVarHolder::convert( uint64 & v )
+{
+	v = 0;
+	return false;
+}
+
+bool BSVarHolder::convert( int64 & v )
+{
+	v = 0;
+	return false;
+}
+
+bool BSVarHolder::convert( string & v )
+{
+	v.clear();
+	return false;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 }//namespace basis
