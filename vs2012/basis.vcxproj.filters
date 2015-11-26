@@ -48,11 +48,11 @@
     <ClInclude Include="..\include\basis_mutex.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_variable.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\basis_subject.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -69,6 +69,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_mutex.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_variable.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\test.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
