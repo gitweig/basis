@@ -1,0 +1,35 @@
+#ifndef _BASIS_EVENT_H_
+#define _BASIS_EVENT_H_
+
+#include "basis_define.h"
+
+namespace basis
+{
+
+class BSEvent
+{
+public:
+	BSEvent(bool manual = false);
+
+	~BSEvent();
+
+public:
+	bool setEvent();
+
+	bool resetEvent();
+
+	bool pulseEvent();
+
+	bool wait(uint32 ms = -1);
+
+private:
+	class BSEventImpl;
+	BSEventImpl* m_impl;
+};
+
+} //namespace basis
+
+using namespace basis;
+
+#endif //_BASIS_EVENT_H_
+

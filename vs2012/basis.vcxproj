@@ -67,6 +67,7 @@
     <ClInclude Include="..\include\basis_checked_delete.h" />
     <ClInclude Include="..\include\basis_critical.h" />
     <ClInclude Include="..\include\basis_define.h" />
+    <ClInclude Include="..\include\basis_event.h" />
     <ClInclude Include="..\include\basis_json.h" />
     <ClInclude Include="..\include\basis_macro.h" />
     <ClInclude Include="..\include\basis_md5.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="..\include\basis_var_holder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\basis_event.cpp" />
     <ClCompile Include="..\src\basis_json.cpp" />
     <ClCompile Include="..\src\basis_atomic.cpp" />
     <ClCompile Include="..\src\basis_critical.cpp" />

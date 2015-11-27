@@ -54,6 +54,9 @@
     <ClInclude Include="..\include\basis_var_holder.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_event.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_subject.cpp">
@@ -78,6 +81,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_var.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_event.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
