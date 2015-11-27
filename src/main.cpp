@@ -25,7 +25,5 @@ public:
 
 int main()
 {
-	uint32* ptr = NULL;
-	ASSERTPTR(ptr);
 	return 0;
 }
