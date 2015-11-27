@@ -45,6 +45,6 @@ struct checked_array_deleter
 	}
 };
 
-} // namespace basis
+}; // namespace basis
 
 #endif // _BASIS_CHECKED_DELETE_H_
