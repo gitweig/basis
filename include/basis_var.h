@@ -56,27 +56,27 @@ BSVar::BSVar( const T& value )
 }
 
 template< typename T >
-bool basis::BSVar::extract( T& value ) const
+bool BSVar::extract( T& value ) const
 {
 	ASSERT(content());
 	return BSVarHolder::extract(content(), value);
 }
 
 template<typename T>
-T & basis::BSVar::extract_def() const
+T & BSVar::extract_def() const
 {
 	ASSERT(content());
 	return BSVarHolder::extract_def<T>(content());
 }
 
 template<typename T>
-basis::BSVar::operator T() const
+BSVar::operator T() const
 {
 	return extract_def<T>();
 }
 
 template<typename T>
-bool basis::BSVar::convert( T & value ) const
+bool BSVar::convert( T & value ) const
 {
 	if (content() == NULL) return false;
 	return m_holder->convert(value);
