@@ -7,6 +7,7 @@
 #include <iostream>
 #include "basis_smart_ptr.h"
 #include "stdio.h"
+#include "basis_macro.h"
 
 class TestA
 {
@@ -24,5 +25,7 @@ public:
 
 int main()
 {
+	uint32* ptr = NULL;
+	ASSERTPTR(ptr);
 	return 0;
 }

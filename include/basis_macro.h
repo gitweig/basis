@@ -84,6 +84,8 @@ namespace basis
 #else//__DEBUG__
 #define ASSERT(x)
 #define VERIFY(x) (x)
+#define ASSERTPTR(ptr)
+#define VERIFPTR(ptr) (ptr)
 #endif//__DEBUG__
 
 }// namespace basis
