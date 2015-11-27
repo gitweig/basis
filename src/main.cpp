@@ -18,7 +18,6 @@ void testJsonParse()
 int main()
 {
 
-	testJsonParse();
 
 	return 0;
 }

@@ -177,25 +177,25 @@ BSJsonValue::ARRARY& BSJsonValue::as_arr()
 
 int64 BSJsonValue::get_int()
 {
-	assert(mType == JSON_INTEGER);
+	assert(mType != JSON_INTEGER);
 	return m_int_value;
 }
 
 string BSJsonValue::get_string()
 {
-	assert(mType = JSON_STRING);
+	assert(mType != JSON_STRING);
 	return m_str_value;
 }
 
 double BSJsonValue::get_real()
 {
-	assert(mType == JSON_REAL);
+	assert(mType != JSON_REAL);
 	return m_doub_value;
 }
 
 bool BSJsonValue::get_bool()
 {
-	assert(mType == JSON_BOOL);
+	assert(mType != JSON_BOOL);
 	return m_bool_value;
 }
 

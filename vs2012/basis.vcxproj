@@ -73,6 +73,7 @@
     <ClInclude Include="..\include\basis_mutex.h" />
     <ClInclude Include="..\include\basis_notification.h" />
     <ClInclude Include="..\include\basis_observer.h" />
+    <ClInclude Include="..\include\basis_rw_lock.h" />
     <ClInclude Include="..\include\basis_smart_ptr.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
@@ -83,6 +84,7 @@
     <ClCompile Include="..\src\basis_critical.cpp" />
     <ClCompile Include="..\src\basis_md5.cpp" />
     <ClCompile Include="..\src\basis_mutex.cpp" />
+    <ClCompile Include="..\src\basis_rw_lock.cpp" />
     <ClCompile Include="..\src\basis_subject.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
