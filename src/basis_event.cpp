@@ -1,11 +1,9 @@
 #include "basis_event.h"
 #include "basis_checked_delete.h"
 
-
-//#include <synchapi.h>
-
 namespace basis 
 {
+
 #ifdef __WINDOWS__
 
 class BSEvent::BSEventImpl
@@ -74,6 +72,12 @@ bool BSEvent::BSEventImpl::wait( uint32 ms )
 
 #endif//__WINDOWS__
 
+#ifdef __POSIX__
+
+
+
+#endif// __POSIX__
+
 BSEvent::BSEvent( bool manual /*= false*/ )
 	: m_impl(new(nothrow) BSEventImpl(manual))
 {
@@ -103,7 +107,7 @@ bool BSEvent::pulseEvent()
 	return m_impl->pulseEvent();
 }
 
-bool BSEvent::wait( uint32 ms = /*-1*/ )
+bool BSEvent::wait( uint32 ms /*=-1*/ ) 
 {
 	if (m_impl == NULL) return false;
 	return m_impl->wait(ms);

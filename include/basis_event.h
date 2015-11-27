@@ -23,6 +23,10 @@ public:
 	bool wait(uint32 ms = -1);
 
 private:
+	BSEvent( const BSEvent& );
+	BSEvent& operator=( const BSEvent& );
+
+private:
 	class BSEventImpl;
 	BSEventImpl* m_impl;
 };
