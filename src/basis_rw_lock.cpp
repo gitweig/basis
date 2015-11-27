@@ -1,6 +1,7 @@
 #include "basis_rw_lock.h"
 #include "basis_atomic.h"
 #include "basis_mutex.h"
+#include "basis_event.h"
 
 namespace basis
 {
@@ -32,12 +33,12 @@ public:
 		// 暂时没考虑锁递归问题
 		// 有线程正在写  或者 是有写等待
 		// 等待 。。。
-		while (m_writeCount >= 1 || m_writeWait) { Sleep(0); }
+		while (m_writeCount || m_writeWait) { sleep(5); }
 
 		// 资源空闲，或者正在进行读进行操作
 		if (0 == m_readCount)
 		{
-			m_signal.lock();
+			m_signal.wait();
 		}
 
 		++m_readCount;
@@ -52,7 +53,7 @@ public:
 			if (0 == m_readCount && 0 == m_writeCount)
 			{
 				++m_writeCount;
-				m_signal.lock();
+				m_signal.wait();
 				break;
 			}
 		}
@@ -61,18 +62,17 @@ public:
 	bool tryReadLock(uint32 _sec = 0)
 	{
 		SmartLocker<BSMutex> locker(m_allLock);
-		// 没有写操作而且没有写等待时，可以进行读操作
+		// 有写操作或者写等待时，可以进行读等待
 		bool isRead = false;
-		if (m_writeCount >= 1 || !m_writeWait)
+		if (m_writeCount || !m_writeWait)
 		{
-			isRead = m_signal.try_lock(_sec);
+			isRead = m_signal.wait(_sec);
 		}
 
 		// 如果可以进行读操作
 		if (isRead)
 		{
 			++m_readCount;
-			
 		}
 
 		return isRead;
@@ -80,35 +80,38 @@ public:
 
 	bool tryWriteLock(uint32 _sec = 0)
 	{
-		SmartLocker<BSMutex> locker(m_all_lock);
-
-		bool isWrite = false;
+		SmartLocker<BSMutex> locker(m_allLock);
+		// 有读或者写操作时，进行写等待
+		bool tmpRW = false;
 		
-		return isWrite;
+		if (m_readCount || m_writeWait)
+		{
+			tmpRW = m_signal.wait(_sec);
+		}
+
+		if (tmpRW && (m_writeCount && m_readCount))
+		{
+			++m_writeCount;
+			return true;
+		}
+
+		return false;
 	}
 
 	void unlockRead()
 	{
-		//SmartLocker<BSMutex> locker(m_all_lock);
-		VERIFY(m_read_count == 0);
+		SmartLocker<BSMutex> locker(m_allLock);
+		VERIFY(0 == m_readCount);
 
-		if (m_read_count > 0)
-		{
-			m_read_lock.unlock();
-			--m_read_count;
-		}
+		m_signal.setEvent();
 	}
 
 	void unlockWrite()
 	{
-		//SmartLocker<BSMutex> locker(m_all_lock);
-		VERIFY(m_write_count = 0);
+		SmartLocker<BSMutex> locker(m_allLock);
+		VERIFY(0 == m_writeCount);
 
-		if (m_read_count >= 1)
-		{
-			m_write_lock.unlock();
-			--m_write_count;
-		}
+		m_signal.setEvent();
 	}
 		
 private:
@@ -116,7 +119,7 @@ private:
 	BSMutex m_allLock; // 整个数据的锁
 	uint32 m_readCount; // 读数量
 	uint32 m_writeCount; // 写数量
-	BSMutex m_signal; //  读信号
+	BSEvent m_signal; //  读信号
 	bool m_writeWait; // 正在写等待
 };
 

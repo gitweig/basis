@@ -48,14 +48,21 @@
     <ClInclude Include="..\include\basis_mutex.h">
       <Filter>include</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\include\basis_rw_lock.h">
+=======
+    <ClInclude Include="..\include\basis_var.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_var_holder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_event.h">
+>>>>>>> b1f6ac24c9c5624a3cce8417c952e84c4e116c17
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\basis_subject.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -74,7 +81,17 @@
     <ClCompile Include="..\src\basis_mutex.cpp">
       <Filter>src</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\src\basis_rw_lock.cpp">
+=======
+    <ClCompile Include="..\src\test.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_var.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_event.cpp">
+>>>>>>> b1f6ac24c9c5624a3cce8417c952e84c4e116c17
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

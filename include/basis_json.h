@@ -293,10 +293,7 @@ class BSJsonParser
 		JSON_T_FALSE,
 		JSON_T_STRING,
 		JSON_T_MAX
-	};
-
-
-		
+	};	
 
 	int topMode();
 
@@ -307,53 +304,53 @@ class BSJsonParser
 		mModeStack.push_back(_mode); 
 	}
 
-	public:
-		BSJsonParser();
+public:
+	BSJsonParser();
 
-		int utf8Check(char byte);
-		bool utf8IsLegal(unsigned char* pos, uint32 length);
+	int utf8Check(char byte);
+	bool utf8IsLegal(unsigned char* pos, uint32 length);
 		
 
-		bool parse(string& str_json, BSJsonValue& _result);
-		bool parseChar(BSJsonValue& _result, int code);
+	bool parse(string& str_json, BSJsonValue& _result);
+	bool parseChar(BSJsonValue& _result, int code);
 		
-		void startObject();
+	void startObject();
 
-		void endObjectOrArr();
+	void endObjectOrArr();
 
-		void startArray();
+	void startArray();
 
-		bool parseBuff();
-		void addEscapeChar(int ch);
-		void addCharToBuff(int ch);
+	bool parseBuff();
+	void addEscapeChar(int ch);
+	void addCharToBuff(int ch);
 		
-		// 获取字符的十六进制
-		bool getChHex(char ch,uint8& hex);
+	// 获取字符的十六进制
+	bool getChHex(char ch,uint8& hex);
 		
-		// 获取字符的unicode编码
-		bool getChUnicode(uint32& unicode);
-		// unicode转utf8
-		string unicodeToUtf8(uint32 unicode);
+	// 获取字符的unicode编码
+	bool getChUnicode(uint32& unicode);
+	// unicode转utf8
+	string unicodeToUtf8(uint32 unicode);
 		
-	private:
-		static const int asciiClass[128];
-		static const int stateTransitionTable[NR_STATES][NR_CLASSES];
-		static int xx;
+private:
+	static const int asciiClass[128];
+	static const int stateTransitionTable[NR_STATES][NR_CLASSES];
+	static int xx;
 
-	private:
-		int mState;
-		int mType; // 正在解析的数据类型
-		string mKey; // 最近的key值
-		string mModeStack; // 数据状态栈
-		BSJsonValue* mResult;
-		vector<BSJsonValue*> mValueStack; // 数值栈
+private:
+	int mState;
+	int mType; // 正在解析的数据类型
+	string mKey; // 最近的key值
+	string mModeStack; // 数据状态栈
+	BSJsonValue* mResult;
+	vector<BSJsonValue*> mValueStack; // 数值栈
 
-		string mBuff; // 存放字符串的内存
-		bool mEscape; // 是否是转义字符
+	string mBuff; // 存放字符串的内存
+	bool mEscape; // 是否是转义字符
 
-		BSJsonStr mJsonStr; // json字符串
+	BSJsonStr mJsonStr; // json字符串
 		
-		//BSJsonValue* mPLastObOrVar; // 最近的object或者是数组（解决层层嵌套问题）
+	//BSJsonValue* mPLastObOrVar; // 最近的object或者是数组（解决层层嵌套问题）
 };
 
 }

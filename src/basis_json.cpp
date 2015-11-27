@@ -645,9 +645,9 @@ bool BSJsonParser::parseChar(BSJsonValue& _result, int nextChar)
 		buffer[0] = nextChar;
 		for(int i = 1; i < count; ++i)
 		{
-		int c = 0;
-		if (!mJsonStr.nextChar(c)) return false;
-		buffer[i] = c;
+			int c = 0;
+			if (!mJsonStr.nextChar(c)) return false;
+			buffer[i] = c;
 		}
 
 		/*if (!utf8IsLegal((unsigned char*) buffer, count))
