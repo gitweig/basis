@@ -14,11 +14,9 @@ public:
 	~BSEvent();
 
 public:
-	bool setEvent();
+	bool set();
 
-	bool resetEvent();
-
-	bool pulseEvent();
+	bool reset();
 
 	bool wait(uint32 ms = -1);
 
