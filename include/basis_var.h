@@ -2,6 +2,7 @@
 #define _BASIS_VAR_H_
 
 #include "basis_var_holder.h"
+#include "basis_smart_ptr.h"
 
 namespace basis {
 
@@ -11,17 +12,17 @@ public:
 	template <typename T>
 	BSVar(const T& value);
 
-	BSVar() : m_holder(NULL) {}
+	BSVar() : m_holder() {}
 	BSVar(const BSVar&);
 	BSVar& operator=(const BSVar&);
-	~BSVar();
+	
+	~BSVar() {}
 
 public:
 	bool isString() const ;
 	bool isInterger() const ;
 	bool isDouble() const ;
 	bool isVector() const ;
-	bool isList() const ;
 	bool isMap() const ;
 
 	BSVarType type() const;
@@ -40,7 +41,12 @@ public:
 	bool extract(T& value) const;
 
 private:
-	BSVarHolder* m_holder;
+	BSVarHolder* content() const { return m_holder.get(); }
+
+private:
+	typedef basis::shared_ptr<BSVarHolder> VarHolderPtr;
+
+	VarHolderPtr m_holder;
 };
 
 template <typename T>
@@ -52,15 +58,15 @@ BSVar::BSVar( const T& value )
 template< typename T >
 bool basis::BSVar::extract( T& value ) const
 {
-	ASSERT(m_holder);
-	return BSVarHolder::extract(m_holder, value);
+	ASSERT(content());
+	return BSVarHolder::extract(content(), value);
 }
 
 template<typename T>
 T & basis::BSVar::extract_def() const
 {
-	ASSERT(m_holder);
-	return BSVarHolder::extract_def<T>(m_holder);
+	ASSERT(content());
+	return BSVarHolder::extract_def<T>(content());
 }
 
 template<typename T>
@@ -72,7 +78,7 @@ basis::BSVar::operator T() const
 template<typename T>
 bool basis::BSVar::convert( T & value ) const
 {
-	if (m_holder == NULL) return false;
+	if (content() == NULL) return false;
 	return m_holder->convert(value);
 }
 

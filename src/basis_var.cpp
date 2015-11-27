@@ -5,36 +5,36 @@ namespace basis
 {
 
 BSVar::BSVar( const BSVar& var )
-	: m_holder( var.m_holder ? var.m_holder->clone() : 0)
 {	
+	if (var.isInterger() || var.isDouble())
+	{
+		m_holder = VarHolderPtr(var.m_holder->clone());
+	}
+	else if (var.content())
+	{
+		m_holder = var.m_holder;
+	}
 }
 
 BSVar& BSVar::operator=( const BSVar& var )
 {
 	if (this != &var)
 	{
-		// 同类型的优化 ?????
-		checked_delete(m_holder);
-		if (var.m_holder)
+		if (var.isInterger() || var.isDouble())
 		{
-			m_holder = var.m_holder->clone();
+			m_holder = VarHolderPtr(var.m_holder->clone());
 		}
-		else
+		else if (var.content())
 		{
-			m_holder = NULL;
-		}	
+			m_holder = var.m_holder;
+		}		
 	}
 	return *this;
 }
 
-BSVar::~BSVar()
-{
-	checked_delete(m_holder);
-}
-
 bool BSVar::isInterger() const
 {
-	if (m_holder) 
+	if (content()) 
 	{
 		return m_holder->isInterger();
 	}
@@ -43,7 +43,7 @@ bool BSVar::isInterger() const
 
 bool BSVar::isDouble() const
 {
-	if (m_holder) 
+	if (content()) 
 	{
 		return m_holder->isDouble();
 	}
@@ -52,7 +52,7 @@ bool BSVar::isDouble() const
 
 bool BSVar::isString() const
 {
-	if (m_holder) 
+	if (content()) 
 	{
 		return m_holder->isString();
 	}
@@ -61,25 +61,16 @@ bool BSVar::isString() const
 
 bool BSVar::isVector() const
 {
-	if (m_holder) 
+	if (content()) 
 	{
 		return m_holder->isVector();
 	}
 	return false;
 }
 
-bool BSVar::isList() const
-{
-	if (m_holder) 
-	{
-		return m_holder->isList();
-	}
-	return false;
-}
-
 bool BSVar::isMap() const
 {
-	if (m_holder) 
+	if (content()) 
 	{
 		return m_holder->isMap();
 	}
@@ -88,7 +79,7 @@ bool BSVar::isMap() const
 
 BSVarType BSVar::type() const
 {
-	if (m_holder) 
+	if (content()) 
 	{
 		return	m_holder->type();
 	}

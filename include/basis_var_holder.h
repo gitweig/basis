@@ -52,19 +52,17 @@ template<class T> class BSVarHolderImpl;
 
 class BSVarHolder
 {	
-private:
-	BSVarHolder& operator=(const BSVarHolder& r);
-
 public:
-	virtual ~BSVarHolder() {}
-
+	// type function
 	virtual bool isString() { return false; }
 	virtual bool isInterger() { return false; }
 	virtual bool isDouble() { return false; }
 	virtual bool isVector() { return false; }
-	virtual bool isList() { return false; }
 	virtual bool isMap() { return false; }
+	virtual BSVarType type();
 
+public:
+	// convert function
 	virtual bool convert(int8 & v);
 	virtual bool convert(uint8 & v);
 	virtual bool convert(int16 & v);
@@ -74,11 +72,16 @@ public:
 	virtual bool convert(uint64 & v);
 	virtual bool convert(int64 & v);
 	virtual bool convert(string & v);
-	
-	virtual BSVarType type() { return BSVarType(BSVarType::kNil); }
-	virtual BSVarHolder* clone() = 0;
 
 public:
+	virtual ~BSVarHolder() {}
+
+private:
+	virtual BSVarHolder* clone() = 0;
+	BSVarHolder& operator=(const BSVarHolder& r);
+	
+protected:
+	friend class BSVar;
 
 	template< typename T >
 	static T & extract_def(BSVarHolder* p);
@@ -86,10 +89,14 @@ public:
 	template< typename T >
 	static bool extract(BSVarHolder* p, T & v);
 
-protected:
 	template< typename T >
 	static BSVarHolder* clone_impl(const BSVarHolderImpl< T >& value);
 };
+
+inline BSVarType BSVarHolder::type()
+{
+	return BSVarType(BSVarType::kNil);
+}
 
 template< typename T >
 bool basis::BSVarHolder::extract( BSVarHolder* p, T & v )

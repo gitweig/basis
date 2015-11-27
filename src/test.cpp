@@ -3,9 +3,33 @@
 
 using namespace basis;
 
+class AA
+{
+public:
+	AA()
+	{
+		printf("c\n");
+	}
+
+	~AA()
+	{
+		printf("d\n");
+	}
+
+	int tt;
+};
+
 int main()
 {
-	BSVar str(string("123445"));
+	{
+		int32 a = 33;
+		BSVar aa(a);
+		BSVar acopy = aa;
+		int32& c = acopy.extract_def<int32>();
+		c = 5;
+	}
+
+ 	BSVar str(string("123445"));
 	BSVar tt(10);
 
 	map<string, BSVar> map_;
@@ -19,3 +43,4 @@ int main()
 
 	return 0;
 }
+	
