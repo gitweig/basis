@@ -19,10 +19,28 @@ namespace basis
 	} \
 	} while (0)
 
+#define	ASSERTMSG(x, msg)\
+	do { \
+		if (!(x)) { \
+			fprintf(stderr, "Assertion ("#x") failed msg(%s) at %s(..) in %s:%d, LastError:%u\r\n", msg, __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
+			fflush(stderr); \
+			abort(); \
+		} \
+	} while (0)
+
 #define VERIFY(x) \
 	do { \
 	if (!(x)) { \
 	fprintf(stderr, "Verification ("#x") failed at %s(..) in %s:%d, LastError:%u\r\n", __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
+	fflush(stderr); \
+	abort(); \
+	} \
+	} while (0)
+
+#define VERIFYMSG(x, msg) \
+	do { \
+	if (!(x)) { \
+	fprintf(stderr, "Verification ("#x") failed msg(%s) at %s(..) in %s:%d, LastError:%u\r\n", msg, __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
 	fflush(stderr); \
 	abort(); \
 	} \
@@ -47,10 +65,28 @@ namespace basis
 	} \
 	} while (0)
 
+#define	ASSERTMSG(x, msg)\
+	do { \
+	if (!(x)) { \
+	fprintf(stderr, "Assertion ("#x") failed msg(%s) at %s(..) in %s:%d, LastError:%u\r\n", msg, __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
+	fflush(stderr); \
+	abort(); \
+	} \
+	} while (0)
+
 #define VERIFY(x) \
 	do { \
 	if (!(x)) { \
 	fprintf(stderr, "Verification ("#x") failed at %s(..) in %s:%d, errno:%d\r\n", __FUNCTION__, __FILE__, __LINE__, errno); \
+	fflush(stderr); \
+	abort(); \
+	} \
+	} while (0)
+
+#define VERIFYMSG(x, msg) \
+	do { \
+	if (!(x)) { \
+	fprintf(stderr, "Verification ("#x") failed msg(%s) at %s(..) in %s:%d, LastError:%u\r\n", msg, __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
 	fflush(stderr); \
 	abort(); \
 	} \
@@ -68,7 +104,9 @@ namespace basis
 #endif//__WINDOWS__
 #else//__DEBUG__
 #define ASSERT(x)
+#define ASSERTMSG(x,msg)
 #define VERIFY(x) (x)
+#define VERIFYMSG(x, msg) (x)
 #define CHECKPTR(ptr)
 #endif//__DEBUG__
 

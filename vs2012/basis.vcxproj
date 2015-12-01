@@ -76,9 +76,12 @@
     <ClInclude Include="..\include\basis_notification.h" />
     <ClInclude Include="..\include\basis_observer.h" />
     <ClInclude Include="..\include\basis_rw_lock.h" />
+    <ClInclude Include="..\include\basis_runnable.h" />
     <ClInclude Include="..\include\basis_smart_ptr.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
+    <ClInclude Include="..\include\basis_thread.h" />
+    <ClInclude Include="..\include\basis_time.h" />
     <ClInclude Include="..\include\basis_var.h" />
     <ClInclude Include="..\include\basis_var_holder.h" />
   </ItemGroup>
@@ -91,6 +94,8 @@
     <ClCompile Include="..\src\basis_mutex.cpp" />
     <ClCompile Include="..\src\basis_rw_lock.cpp" />
     <ClCompile Include="..\src\basis_subject.cpp" />
+    <ClCompile Include="..\src\basis_thread.cpp" />
+    <ClCompile Include="..\src\basis_time.cpp" />
     <ClCompile Include="..\src\basis_var.cpp" />
     <ClCompile Include="..\src\test.cpp" />
   </ItemGroup>
