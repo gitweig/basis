@@ -63,6 +63,9 @@ namespace basis
 		void unlock();
 		bool tryReadLock(uint32 _sec);
 		bool tryWriteLock(uint32 _sec);
+	private:
+		BSRWLock(const BSRWLock& rw);
+		BSRWLock& operator=(const BSRWLock&);
 
 	private:
 		class SysRWLock;
