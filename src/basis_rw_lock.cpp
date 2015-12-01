@@ -49,12 +49,12 @@ public:
 		ASSERT((readInsert(thread_id()), true));
 		++m_readCount; 
 		m_locker.unlock();
-
 	}
 
 	bool tryReadLock(uint32 _sec)
 	{
 		m_locker.lock();
+
 		ASSERTMSG(basis::thread_id() != m_writeThread, "have write lock, can't read lock");
 		ASSERTMSG(!readCount(basis::thread_id()), "rw locker can't recurrence lock");
 
@@ -63,13 +63,11 @@ public:
 		{
 			++m_rWait;
 			m_locker.unlock();
-
 			m_signal.wait(_sec);
-
 			m_locker.lock();
 			--m_rWait;
-
 			// ºÏ≤‚œ÷‘⁄◊¥Ã¨
+
 			if (m_writeCount || m_wWait) 
 			{
 				m_locker.unlock();
@@ -86,11 +84,11 @@ public:
 	{
 		m_locker.lock();
 
+		ASSERT(m_readCount > 0);
 		if (m_readCount > 0)
 		{
-			--m_readCount;
 			ASSERT((readErase(thread_id()), true));
-			if (!m_readCount) 
+			if (!m_readCount--) 
 			{
 				if (m_wWait || m_rWait)
 				{
@@ -105,7 +103,7 @@ public:
 	{	
 		m_locker.lock();
 
-		ASSERTMSG(basis::thread_id() != m_writeThread, "have write lock, can't read lock");
+		ASSERTMSG(basis::thread_id() != m_writeThread, "have write lock, can't recurrence lock");
 		ASSERTMSG(!readCount(basis::thread_id()), "rw locker can't recurrence lock");
 
 		while (m_readCount || m_writeCount)
@@ -116,7 +114,6 @@ public:
 			m_signal.wait(); // µ»¥˝–≈∫≈
 			m_locker.lock();
 			--m_wWait;
-			//locker.unlock();
 		}
 
 		// ø’œ–◊¥Ã¨;
@@ -129,7 +126,7 @@ public:
 	{
 		m_locker.lock();
 
-		ASSERTMSG(thread_id() != m_writeThread, "have write lock, can't read lock");
+		ASSERTMSG(thread_id() != m_writeThread, "have write lock, can't recurrence lock");
 		ASSERTMSG(!readCount(thread_id()), "rw locker can't recurrence lock");
 
 		// ºÏ≤‚∂¡◊¥Ã¨
@@ -157,10 +154,11 @@ public:
 	void unlockWrite()
 	{
 		m_locker.lock();
-		if (m_writeCount)
+
+		ASSERT(m_writeCount > 0);
+		if (m_writeCount > 0)
 		{
-			--m_writeCount;
-			if (!m_writeCount)
+			if (!m_writeCount--)
 			{
 				// –¥œﬂ≥Ã÷√¡„
 				ASSERT((setWriteThreadId(0), true));
@@ -186,8 +184,7 @@ private:
 #ifdef __DEBUG__
 	uint32 m_writeThread; // –¥œﬂ≥Ãid
 	set<uint32> m_readThreadList; // ∂¡œﬂ≥Ã¡–±Ì
-	BSCritical m_thread_lock;
-
+	
 	void setWriteThreadId(uint32 threadId)
 	{
 		m_writeThread = threadId;
@@ -195,22 +192,18 @@ private:
 
 	uint32 readCount(uint32 id)
 	{
-		BSScopeLocker<BSCritical> lock_(m_thread_lock);
 		return (uint32)m_readThreadList.count(id);
 	}
 	uint32 readTotal()
 	{
-		BSScopeLocker<BSCritical> lock_(m_thread_lock);
 		return (uint32)m_readThreadList.size();
 	}
 	void readInsert(uint32 id)
 	{
-		BSScopeLocker<BSCritical> lock_(m_thread_lock);
 		m_readThreadList.insert(id);
 	}
 	void readErase(uint32 id)
 	{
-		BSScopeLocker<BSCritical> lock_(m_thread_lock);
 		m_readThreadList.erase(id);
 	}
 

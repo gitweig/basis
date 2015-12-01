@@ -13,10 +13,10 @@ protected:
 	~BSNoCopy() {}
 
 private:
-	BSNoCopy(const BSNoCopy& _copy);
-	BSNoCopy& operator=(const BSNoCopy& _copy);
+	BSNoCopy(const BSNoCopy&);
+	BSNoCopy& operator=(const BSNoCopy&);
 };
 
-}
-using namespace basis;
-#endif
+}; //namespace basis
+
+#endif //_BASIS_NO_COPY_
