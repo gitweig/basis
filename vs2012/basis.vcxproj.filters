@@ -69,6 +69,12 @@
     <ClInclude Include="..\include\basis_rw_lock.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_scope_locker.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_no_copy.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_subject.cpp">

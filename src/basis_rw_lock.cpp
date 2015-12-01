@@ -2,6 +2,8 @@
 #include "basis_event.h"
 #include "basis_mutex.h"
 #include "basis_critical.h"
+#include "basis_scope_locker.h"
+#include "basis_macro.h"
 
 namespace basis
 {
@@ -21,20 +23,20 @@ namespace basis
 
 		~SysRWLock()
 		{
-			//ASSERT((!m_rWait && !m_wWait));
-			//ASSERT(!total() && "the rw locker is currently locked");
-			//ASSERT(!m_writeThread && "the rw locker is currently locked");
+			ASSERT((!m_rWait && !m_wWait));
+			ASSERTMSG(!readTotal(), "the rw locker is currently locked");
+			ASSERTMSG(!m_writeThread, "the rw locker is currently locked");
 		}
 
 		void readLock()
 		{
-			SmartLocker<BSCritical> locker(m_allLock);
+			BSScopeLocker<BSCritical> locker(m_allLock);
 
-			//ASSERT(xcore::thread_id() != m_writeThread && "have write lock, can't read lock");
-			//ASSERT(!readCount(xcore::thread_id()) && "rw locker can't recurrence lock");
+			ASSERTMSG(xcore::thread_id() != m_writeThread, "have write lock, can't read lock");
+			ASSERTMSG(!readCount(xcore::thread_id()), "rw locker can't recurrence lock");
 
 			// 现在是写状态 或者是有写等待
-			if (/*m_isWrite*/m_writeCount || (WRITE_PRO == m_type && m_wWait))
+			while (m_writeCount || m_wWait)
 			{
 				++m_rWait;
 				m_signal.reset(); // 设置为无信号状态,为了后续等待
@@ -42,11 +44,11 @@ namespace basis
 				m_signal.wait(); // 等待获取资源
 				locker.lock();
 				--m_rWait;
-				locker.unlock();
+				//locker.unlock();
 			}
 
 			locker.lock();
-			//readInsert(xcore::thread_id());
+			readInsert(basis::thread_id());
 			++m_readCount; 
 			locker.unlock();
 
@@ -54,11 +56,11 @@ namespace basis
 
 		bool tryReadLock(uint32 _sec)
 		{
-			SmartLocker<BSCritical> locker(m_allLock);
+			BSScopeLocker<BSCritical> locker(m_allLock);
 			if (WRITE_PRO == m_type && m_wWait) return false;
 
-			//ASSERT(xcore::thread_id() != m_writeThread && "have write lock, can't read lock");
-			//ASSERT(!readCount(xcore::thread_id()) && "rw locker can't recurrence lock");
+			ASSERTMSG(xcore::thread_id() != m_writeThread, "have write lock, can't read lock");
+			ASSERTMSG(!readCount(xcore::thread_id()), "rw locker can't recurrence lock");
 
 			// 检测写状态 或者是 写等待
 			if (m_writeCount || (WRITE_PRO == m_type && m_wWait))
@@ -78,7 +80,7 @@ namespace basis
 
 		void unlockRead()
 		{
-			SmartLocker<BSCritical> locker(m_allLock);
+			BSScopeLocker<BSCritical> locker(m_allLock);
 
 			if (m_readCount > 0)
 			{
@@ -97,10 +99,10 @@ namespace basis
 		void writeLock()
 		{	
 			
-			SmartLocker<BSCritical> locker(m_allLock);
+			BSScopeLocker<BSCritical> locker(m_allLock);
 
-			//ASSERT(xcore::thread_id() != m_writeThread && "have write lock, can't read lock");
-			//ASSERT(!readCount(xcore::thread_id()) && "rw locker can't recurrence lock");
+			ASSERTMSG(xcore::thread_id() != m_writeThread, "have write lock, can't read lock");
+			ASSERTMSG(!readCount(xcore::thread_id()), "rw locker can't recurrence lock");
 
 			while (m_readCount || m_writeCount)
 			{
@@ -110,22 +112,22 @@ namespace basis
 				m_signal.wait(); // 等待信号
 				locker.lock();
 				--m_wWait;
-				locker.unlock();
+				//locker.unlock();
 			}
 
 			// 空闲状态
-			locker.lock();
-			//setWriteThreadId(xcore::thread_id())
+			//locker.lock();
+			setWriteThreadId(xcore::thread_id())
 			++m_writeCount;
 			locker.unlock();
 		}
 
 		bool tryWriteLock(uint32 _sec = 0)
 		{
-			SmartLocker<BSCritical> locker(m_allLock);
+			BSScopeLocker<BSCritical> locker(m_allLock);
 
-			//ASSERT(xcore::thread_id() != m_writeThread && "have write lock, can't read lock");
-			//ASSERT(!readCount(xcore::thread_id()) && "rw locker can't recurrence lock");
+			ASSERTMSG(xcore::thread_id() != m_writeThread, "have write lock, can't read lock");
+			ASSERTMSG(!readCount(xcore::thread_id()), "rw locker can't recurrence lock");
 
 			// 检测读状态
 			if (m_readCount || m_writeCount)
@@ -148,7 +150,7 @@ namespace basis
 
 		void unlockWrite()
 		{
-			SmartLocker<BSCritical> locker(m_allLock);
+			BSScopeLocker<BSCritical> locker(m_allLock);
 			if (m_writeCount)
 			{
 				--m_writeCount;
@@ -191,22 +193,22 @@ namespace basis
 
 		uint32 readCount(uint32 id)
 		{
-			SmartLocker<BSCritical> lock_(m_thread_lock);
+			BSScopeLocker<BSCritical> lock_(m_thread_lock);
 			return (uint32)m_readThreadList.count(id);
 		}
 		uint32 readTotal()
 		{
-			SmartLocker<BSCritical> lock_(m_thread_lock);
+			BSScopeLocker<BSCritical> lock_(m_thread_lock);
 			return (uint32)m_readThreadList.size();
 		}
 		void readInsert(uint32 id)
 		{
-			SmartLocker<BSCritical> lock_(m_thread_lock);
+			BSScopeLocker<BSCritical> lock_(m_thread_lock);
 			m_readThreadList.insert(id);
 		}
 		void readErase(uint32 id)
 		{
-			SmartLocker<BSCritical> lock_(m_thread_lock);
+			BSScopeLocker<BSCritical> lock_(m_thread_lock);
 			m_readThreadList.erase(id);
 		}
 
@@ -273,6 +275,7 @@ namespace basis
 
 	BSRWLock::BSRWLock(int type)
 		: m_lock(new SysRWLock(WRITE_PRO))
+		, m_type(type)
 	{
 
 	}
