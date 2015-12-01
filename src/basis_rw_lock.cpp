@@ -253,6 +253,16 @@ public:
 		VERIFY(pthread_rwlock_wrlock(&m_rwLock));
 	}
 
+	void unlockRead()
+	{
+		VERIFY(pthread_rwlock_unlock(&m_rwLock);
+	}
+
+	void unlockWrite()
+	{
+		VERIFY(pthread_rwlock_unlock(&m_rwLock);
+	}
+
 	bool tryReadLock()
 	{
 		return 0 == pthread_rwlock_tryrdlock(&m_rwLock);
