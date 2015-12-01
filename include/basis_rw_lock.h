@@ -23,7 +23,6 @@ public:
 	void writeLock();
 	void unlockRead();
 	void unlockWrite();
-	void unlock();
 	bool tryReadLock(uint32 _sec);
 	bool tryWriteLock(uint32 _sec);
 
