@@ -129,6 +129,11 @@ uint32 __stdcall BSThread::BSThreadImpl::start_trn( void * arg )
 	return 0;
 }
 
+uint32 thread_id()
+{
+	return GetCurrentThreadId();
+}
+
 #endif //__WINDOWS__
 
 #ifdef __POSIX__
@@ -243,6 +248,11 @@ uint32 BSThread::BSThreadImpl::thread_id()
 const string& BSThread::BSThreadImpl::name()
 {
 	return m_name;
+}
+
+uint32 thread_id()
+{
+	return (uint32)pthread_self();
 }
 
 #endif //__POSIX__
