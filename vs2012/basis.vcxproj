@@ -74,6 +74,7 @@
     <ClInclude Include="..\include\basis_md5.h" />
     <ClInclude Include="..\include\basis_mutex.h" />
     <ClInclude Include="..\include\basis_notification.h" />
+    <ClInclude Include="..\include\basis_no_copy.h" />
     <ClInclude Include="..\include\basis_observer.h" />
     <ClInclude Include="..\include\basis_rw_lock.h" />
     <ClInclude Include="..\include\basis_runnable.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="..\include\basis_time.h" />
     <ClInclude Include="..\include\basis_var.h" />
     <ClInclude Include="..\include\basis_var_holder.h" />
+    <ClInclude Include="..\include\basis_scope_locker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_event.cpp" />
