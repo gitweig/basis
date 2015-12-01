@@ -66,6 +66,9 @@
     <ClInclude Include="..\include\basis_time.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_rw_lock.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_subject.cpp">
@@ -99,6 +102,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_time.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_rw_lock.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
