@@ -237,7 +237,7 @@ bool BSThread::BSThreadImpl::started()
 
 uint32 BSThread::BSThreadImpl::thread_id()
 {
-	return 0;
+	return (uint32)m_tid;
 }
 
 const string& BSThread::BSThreadImpl::name()
