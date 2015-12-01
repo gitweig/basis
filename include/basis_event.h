@@ -29,17 +29,6 @@ private:
 	BSEventImpl* m_impl;
 };
 
-// ∫¡√Î
-void sleep(uint32 ms)
-{
-#ifdef __WINDOWS__
-	Sleep(ms);
-#elif __POSIX__
-	usleep(ms * 1000);
-#endif // __WINDOWS__
-
-}
-
 } //namespace basis
 
 using namespace basis;
