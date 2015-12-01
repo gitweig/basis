@@ -40,6 +40,10 @@ public:
 
 int main()
 {
+
+	//ASSERTMSG(0, "wrong number");
+	//VERIFYMSG(0,"null number");
+
 	{
 		int32 a = 33;
 		BSVar aa(a);
