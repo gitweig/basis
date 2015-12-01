@@ -21,8 +21,8 @@ public:
 
 int main()
 {
-	ASSERT(0);
-	VERIFY(0);
+	ASSERTMSG(0, "wrong number");
+	VERIFYMSG(0,"null number");
 	{
 		int32 a = 33;
 		BSVar aa(a);

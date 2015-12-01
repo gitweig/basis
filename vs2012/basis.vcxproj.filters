@@ -57,6 +57,9 @@
     <ClInclude Include="..\include\basis_event.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_time.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_subject.cpp">
@@ -84,6 +87,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_event.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_time.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
