@@ -5,7 +5,7 @@
 namespace basis
 {
 template<class T, bool isLock = false>
-class BSScopeLocker
+class BSScopeLocker : public BSNoCopy
 {
 public:
 	explicit BSScopeLocker(T& lock)
@@ -43,6 +43,6 @@ private:
 	bool m_locked;
 };
 
-}
-using namespace basis;
-#endif
+}; //namespace basis
+
+#endif //_SCOPE_LOCKER_H_

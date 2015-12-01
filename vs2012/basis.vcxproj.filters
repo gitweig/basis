@@ -72,7 +72,7 @@
     <ClInclude Include="..\include\basis_scope_locker.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\basis_no_copy.h">
+    <ClInclude Include="..\include\basis_nocopy.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

@@ -44,10 +44,8 @@ public:
 			m_signal.wait(); // 等待获取资源
 			m_locker.lock();
 			--m_rWait;
-			//locker.unlock();
 		}
 
-		//locker.lock();
 		readInsert(thread_id());
 		++m_readCount; 
 		m_locker.unlock();

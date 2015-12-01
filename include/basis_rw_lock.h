@@ -2,7 +2,7 @@
 #define _BASIS_RW_LOCK_H_
 
 #include "basis_define.h"
-#include "basis_no_copy.h"
+#include "basis_nocopy.h"
 
 // ¶ÁÐ´Ëø£¨·ÇµÝ¹é£©
 namespace basis
