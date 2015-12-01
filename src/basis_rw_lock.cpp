@@ -46,16 +46,14 @@ public:
 			--m_rWait;
 		}
 
-		readInsert(thread_id());
+		ASSERT((readInsert(thread_id()), true));
 		++m_readCount; 
 		m_locker.unlock();
-
 	}
 
 	bool tryReadLock(uint32 _sec)
 	{
 		m_locker.lock();
-		if (WRITE_PRO == m_type && m_wWait) return false;
 
 		ASSERTMSG(basis::thread_id() != m_writeThread, "have write lock, can't read lock");
 		ASSERTMSG(!readCount(basis::thread_id()), "rw locker can't recurrence lock");
@@ -63,24 +61,20 @@ public:
 		// ¼ì²âÐ´×´Ì¬ »òÕßÊÇ Ð´µÈ´ý
 		if (m_writeCount || m_wWait)
 		{
-			m_locker.unlock(); // ·Å¿ªm_isWrite×´Ì¬£¬·ÀÖ¹ËÀËø
-
+			++m_rWait;
+			m_locker.unlock();
 			m_signal.wait(_sec);
-
 			m_locker.lock();
-			// ¼ì²âÏÖÔÚ×´Ì¬
-			if (m_writeCount) 
+			--m_rWait;
+			if (m_writeCount || m_wWait) 
 			{
 				m_locker.unlock();
 				return false;
 			}
-			else 
-			{
-				++m_readCount;
-				m_locker.unlock();
-			}
 		}
 
+		++m_readCount;
+		m_locker.unlock();
 		return true;
 	}
 
@@ -88,11 +82,11 @@ public:
 	{
 		m_locker.lock();
 
+		ASSERT(m_readCount > 0);
 		if (m_readCount > 0)
 		{
-			--m_readCount;
 			ASSERT((readErase(thread_id()), true));
-			if (!m_readCount) 
+			if (!m_readCount--) 
 			{
 				if (m_wWait || m_rWait)
 				{
@@ -118,12 +112,10 @@ public:
 			m_signal.wait(); // µÈ´ýÐÅºÅ
 			m_locker.lock();
 			--m_wWait;
-			//locker.unlock();
 		}
 
-		// ¿ÕÏÐ×´Ì¬
-		//locker.lock();
-		setWriteThreadId(thread_id());
+		// ¿ÕÏÐ×´Ì¬;
+		ASSERT((setWriteThreadId(thread_id()), true));
 		++m_writeCount;
 		m_locker.unlock();
 	}
@@ -138,35 +130,34 @@ public:
 		// ¼ì²â¶Á×´Ì¬
 		if (m_readCount || m_writeCount)
 		{
+			++m_wWait;
 			m_locker.unlock();
 			m_signal.wait(_sec);
 			m_locker.lock();
-			// ¼ì²âÊÇ·ñ³¬Ê±£¨·ÀÖ¹ÒâÍâÇé¿ö£¬Ã»ÓÐÊ¹ÓÃwait·µ»ØÖµ£©
+			--m_wWait;
 			if (m_readCount || m_writeCount)
 			{
 				m_locker.unlock();
 				return false;
 			}
-			else
-			{
-				++m_writeCount;
-				m_locker.unlock();
-			}
 		}
 
+		++m_writeCount;
+		m_locker.unlock();
 		return true;
 	}
 
 	void unlockWrite()
 	{
 		m_locker.lock();
-		if (m_writeCount)
+
+		ASSERT(m_writeCount > 0);
+		if (m_writeCount > 0)
 		{
-			--m_writeCount;
-			if (!m_writeCount)
+			if (!m_writeCount--)
 			{
 				// Ð´Ïß³ÌÖÃÁã
-				setWriteThreadId(0);
+				ASSERT((setWriteThreadId(0), true));
 				if (m_wWait > 0 || m_rWait > 0)
 				{
 					m_signal.set();
