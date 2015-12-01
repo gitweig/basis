@@ -61,26 +61,24 @@ public:
 		// 检测写状态 或者是 写等待
 		if (m_writeCount || m_wWait)
 		{
+			++m_rWait;
 			m_locker.unlock();
 
 			m_signal.wait(_sec);
 
 			m_locker.lock();
+			--m_rWait;
+
 			// 检测现在状态
 			if (m_writeCount || m_wWait) 
 			{
 				m_locker.unlock();
 				return false;
 			}
-			else 
-			{
-				++m_readCount;
-				m_locker.unlock();
-			}
 		}
 
+		++m_readCount;
 		m_locker.unlock();
-
 		return true;
 	}
 
@@ -137,23 +135,22 @@ public:
 		// 检测读状态
 		if (m_readCount || m_writeCount)
 		{
+			++m_wWait;
 			m_locker.unlock();
 			m_signal.wait(_sec);
 			m_locker.lock();
+			--m_wWait;
 			// 检测是否超时（防止意外情况，没有使用wait返回值）
 			if (m_readCount || m_writeCount)
 			{
 				m_locker.unlock();
 				return false;
 			}
-			else
-			{
-				++m_writeCount;
-				m_locker.unlock();
-			}
 		}
 
+		++m_writeCount;
 		m_locker.unlock();
+
 		return true;
 	}
 
