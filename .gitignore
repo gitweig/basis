@@ -1,5 +1,6 @@
 # Compiled folder
 /vs2012/Debug
+/vs2012/Release
 vs2012/basis.opensdf
 *.sdf
 vs2012/basis.vcxproj.user
