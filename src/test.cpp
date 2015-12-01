@@ -1,5 +1,6 @@
 #include "basis_var.h"
 #include <iostream>
+#include "basis_thread.h"
 
 using namespace basis;
 
@@ -19,10 +20,26 @@ public:
 	int tt;
 };
 
+class Run1 : public BSRunnable
+{
+public:
+	virtual void run(BSThread* p)
+	{
+		
+	}
+};
+
+class Run2 : public BSRunnable
+{
+public:
+	virtual void run(BSThread* p)
+	{
+		
+	}
+};
+
 int main()
 {
-	ASSERT(0);
-	VERIFY(0);
 	{
 		int32 a = 33;
 		BSVar aa(a);
@@ -42,6 +59,22 @@ int main()
 	bool ismap = map_value.isMap();
 
 	const map<string, BSVar>& d = map_value.extract_def< map<string, BSVar> >();
+
+	BSThread thread1("t1");
+	BSThread thread2("t2");
+
+	Run1 r1;
+	Run2 r2;
+
+	thread1.start(&r1);
+	thread2.start(&r2);
+
+	//thread1.stop();
+	//thread2.stop();
+
+	thread1.join();
+	thread2.join();
+	
 
 	return 0;
 }

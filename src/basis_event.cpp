@@ -138,7 +138,7 @@ bool BSEvent::BSEventImpl::resetEvent()
 
 bool BSEvent::BSEventImpl::wait( uint32 ms )
 {
-	if (ms > 0)
+	if (ms >= 0)
 	{
 		// set time
 		struct timespec tsp;
@@ -147,10 +147,8 @@ bool BSEvent::BSEventImpl::wait( uint32 ms )
 		uint32 scn = ms / 1000;
 		uint32 msc = ms % 1000;
 		ms = now.tv_usec * 1000;
-		uint32 of = ms / 1000;
-		uint32 md = ms % 1000;
-		tsp->tv_sec = now.tv_sec + scn + of;
-		tsp->tv_nsec = md;
+		tsp->tv_sec = now.tv_sec + scn + ms / 1000;
+		tsp->tv_nsec = ms % 1000;
 
 		pthread_mutex_lock(&m_mutex);
 		while (!m_variable)
