@@ -44,11 +44,9 @@ public:
 			m_signal.wait(); // µÈ´ý»ñÈ¡×ÊÔ´
 			m_locker.lock();
 			--m_rWait;
-			//locker.unlock();
 		}
 
-		//locker.lock();
-		readInsert(thread_id());
+		ASSERT((readInsert(thread_id()), true));
 		++m_readCount; 
 		m_locker.unlock();
 
@@ -57,21 +55,19 @@ public:
 	bool tryReadLock(uint32 _sec)
 	{
 		m_locker.lock();
-		if (WRITE_PRO == m_type && m_wWait) return false;
-
 		ASSERTMSG(basis::thread_id() != m_writeThread, "have write lock, can't read lock");
 		ASSERTMSG(!readCount(basis::thread_id()), "rw locker can't recurrence lock");
 
 		// ¼ì²âÐ´×´Ì¬ »òÕßÊÇ Ð´µÈ´ý
 		if (m_writeCount || m_wWait)
 		{
-			m_locker.unlock(); // ·Å¿ªm_isWrite×´Ì¬£¬·ÀÖ¹ËÀËø
+			m_locker.unlock();
 
 			m_signal.wait(_sec);
 
 			m_locker.lock();
 			// ¼ì²âÏÖÔÚ×´Ì¬
-			if (m_writeCount) 
+			if (m_writeCount || m_wWait) 
 			{
 				m_locker.unlock();
 				return false;
@@ -82,6 +78,8 @@ public:
 				m_locker.unlock();
 			}
 		}
+
+		m_locker.unlock();
 
 		return true;
 	}
@@ -123,9 +121,8 @@ public:
 			//locker.unlock();
 		}
 
-		// ¿ÕÏÐ×´Ì¬
-		//locker.lock();
-		setWriteThreadId(thread_id());
+		// ¿ÕÏÐ×´Ì¬;
+		ASSERT((setWriteThreadId(thread_id()), true));
 		++m_writeCount;
 		m_locker.unlock();
 	}
@@ -156,6 +153,7 @@ public:
 			}
 		}
 
+		m_locker.unlock();
 		return true;
 	}
 
@@ -168,7 +166,7 @@ public:
 			if (!m_writeCount)
 			{
 				// Ð´Ïß³ÌÖÃÁã
-				setWriteThreadId(0);
+				ASSERT((setWriteThreadId(0), true));
 				if (m_wWait > 0 || m_rWait > 0)
 				{
 					m_signal.set();
