@@ -66,6 +66,8 @@ public:
 			m_signal.wait(_sec);
 			m_locker.lock();
 			--m_rWait;
+			// 检测现在状态
+
 			if (m_writeCount || m_wWait) 
 			{
 				m_locker.unlock();
@@ -101,7 +103,7 @@ public:
 	{	
 		m_locker.lock();
 
-		ASSERTMSG(basis::thread_id() != m_writeThread, "have write lock, can't read lock");
+		ASSERTMSG(basis::thread_id() != m_writeThread, "have write lock, can't recurrence lock");
 		ASSERTMSG(!readCount(basis::thread_id()), "rw locker can't recurrence lock");
 
 		while (m_readCount || m_writeCount)
@@ -124,7 +126,7 @@ public:
 	{
 		m_locker.lock();
 
-		ASSERTMSG(thread_id() != m_writeThread, "have write lock, can't read lock");
+		ASSERTMSG(thread_id() != m_writeThread, "have write lock, can't recurrence lock");
 		ASSERTMSG(!readCount(thread_id()), "rw locker can't recurrence lock");
 
 		// 检测读状态
@@ -135,6 +137,7 @@ public:
 			m_signal.wait(_sec);
 			m_locker.lock();
 			--m_wWait;
+			// 检测是否超时（防止意外情况，没有使用wait返回值）
 			if (m_readCount || m_writeCount)
 			{
 				m_locker.unlock();
@@ -144,6 +147,7 @@ public:
 
 		++m_writeCount;
 		m_locker.unlock();
+
 		return true;
 	}
 
@@ -180,8 +184,7 @@ private:
 #ifdef __DEBUG__
 	uint32 m_writeThread; // 写线程id
 	set<uint32> m_readThreadList; // 读线程列表
-	BSCritical m_thread_lock;
-
+	
 	void setWriteThreadId(uint32 threadId)
 	{
 		m_writeThread = threadId;
@@ -189,22 +192,18 @@ private:
 
 	uint32 readCount(uint32 id)
 	{
-		BSScopeLocker<BSCritical> lock_(m_thread_lock);
 		return (uint32)m_readThreadList.count(id);
 	}
 	uint32 readTotal()
 	{
-		BSScopeLocker<BSCritical> lock_(m_thread_lock);
 		return (uint32)m_readThreadList.size();
 	}
 	void readInsert(uint32 id)
 	{
-		BSScopeLocker<BSCritical> lock_(m_thread_lock);
 		m_readThreadList.insert(id);
 	}
 	void readErase(uint32 id)
 	{
-		BSScopeLocker<BSCritical> lock_(m_thread_lock);
 		m_readThreadList.erase(id);
 	}
 
