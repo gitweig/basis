@@ -21,6 +21,8 @@ public:
 
 int main()
 {
+	ASSERT(0);
+	VERIFY(0);
 	{
 		int32 a = 33;
 		BSVar aa(a);

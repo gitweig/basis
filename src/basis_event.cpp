@@ -49,11 +49,6 @@ bool BSEvent::BSEventImpl::resetEvent()
 	return ResetEvent(m_handle) ? true : false;
 }
 
-//bool BSEvent::BSEventImpl::pulseEvent()
-//{
-//	return PulseEvent(m_handle) ? true : false;
-//}
-
 bool BSEvent::BSEventImpl::wait( uint32 ms )
 {
 	switch (WaitForSingleObject(m_handle, ms))
