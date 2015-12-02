@@ -1,6 +1,7 @@
 #include "basis_var.h"
 #include <iostream>
 #include "basis_thread.h"
+#include "basis_timespan.h"
 
 using namespace basis;
 
@@ -40,9 +41,6 @@ public:
 
 int main()
 {
-
-	//ASSERTMSG(0, "wrong number");
-	//VERIFYMSG(0,"null number");
 
 	{
 		int32 a = 33;

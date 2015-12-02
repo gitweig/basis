@@ -55,6 +55,15 @@ namespace basis
 	} \
 	} while(0)
 
+#define  UNEXPECT(branch) \
+	do{ \
+	if(branch){ \
+	fprintf(stderr, "The branch is unexpected at %s(..) in %s:%d, LastError:%u\r\n", __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
+	fflush(stderr); \
+	abort(); \
+	} \
+	} while (0);
+
 #else//__WINDOWS__
 #define ASSERT(x) \
 	do { \
@@ -100,6 +109,15 @@ namespace basis
 	abort(); \
 	} \
 	} while (0)
+
+#define  UNEXPECT(branch) \
+	do{ \
+	if(branch){ \
+	fprintf(stderr, "The branch is unexpected at %s(..) in %s:%d, LastError:%u\r\n", __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
+	fflush(stderr); \
+	abort(); \
+	} \
+	} while (0);
 
 #endif//__WINDOWS__
 #else//__DEBUG__
