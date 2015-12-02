@@ -81,6 +81,7 @@
     <ClInclude Include="..\include\basis_smart_ptr.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
+    <ClInclude Include="..\include\basis_sync_queue.h" />
     <ClInclude Include="..\include\basis_thread.h" />
     <ClInclude Include="..\include\basis_time.h" />
     <ClInclude Include="..\include\basis_var.h" />

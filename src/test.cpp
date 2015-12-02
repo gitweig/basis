@@ -1,31 +1,22 @@
 #include "basis_var.h"
 #include <iostream>
 #include "basis_thread.h"
+#include "basis_sync_queue.h"
+#include "basis_event.h"
 
 using namespace basis;
 
-class AA
-{
-public:
-	AA()
-	{
-		printf("c\n");
-	}
+BSSyncQueue<int> syncqueue;
 
-	~AA()
-	{
-		printf("d\n");
-	}
-
-	int tt;
-};
+BSEvent the_event;
 
 class Run1 : public BSRunnable
 {
 public:
 	virtual void run(BSThread* p)
 	{
-		
+		the_event.wait();
+		printf("11");
 	}
 };
 
@@ -34,35 +25,19 @@ class Run2 : public BSRunnable
 public:
 	virtual void run(BSThread* p)
 	{
-		
+		the_event.wait();
+		printf("22");
 	}
 };
 
+
 int main()
 {
-
-	//ASSERTMSG(0, "wrong number");
-	//VERIFYMSG(0,"null number");
-
-	{
-		int32 a = 33;
-		BSVar aa(a);
-		BSVar acopy = aa;
-		int32& c = acopy.extract_def<int32>();
-		c = 5;
-	}
-
- 	BSVar str(string("123445"));
-	BSVar tt(10);
-
-	map<string, BSVar> map_;
-	map_["str"] = str;
-	map_["tt"] = tt;
-	BSVar map_value(map_);
-
-	bool ismap = map_value.isMap();
-
-	const map<string, BSVar>& d = map_value.extract_def< map<string, BSVar> >();
+	the_event.set();
+	the_event.set();
+	the_event.set();
+	the_event.set();
+	the_event.reset();
 
 	BSThread thread1("t1");
 	BSThread thread2("t2");
@@ -73,11 +48,26 @@ int main()
 	thread1.start(&r1);
 	thread2.start(&r2);
 
+	Sleep(10000);
+	
+	the_event.set();
+
+	int a = 0;
+	syncqueue.pull(a);
+	syncqueue.pull(a);
+	
+
+
+
 	//thread1.stop();
 	//thread2.stop();
 
+	Sleep(100000);
 	thread1.join();
 	thread2.join();
+
+	
+	uint32 sz = syncqueue.size();
 	
 
 	return 0;
