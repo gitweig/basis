@@ -116,9 +116,9 @@ string BSStrTool::strSplicing(const vector<string>& strList, const string& sep)
 
 void BSStrTool::split(const string& str, vector<string>& items,  const char* args, uint32 itemCount)
 {
-	uint32 pos_begin = 0;
-	uint32 pos_end = 0;
-	uint32 _count = 1;
+	size_t pos_begin = 0;
+	size_t pos_end = 0;
+	size_t _count = 1;
 	const char* pos = str.c_str();
 
 	while (string::npos != pos_end && _count <= itemCount)
