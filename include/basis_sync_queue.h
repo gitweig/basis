@@ -59,11 +59,6 @@ template<typename T>
 bool basis::BSSyncQueue<T>::pull( element_type& x, uint32 ms )
 {
 	m_lock.lock();
-	if (m_exit)
-	{
-		m_lock.unlock();
-		return false;
-	}
 	while (m_queue.empty())
 	{
 		m_lock.unlock();
