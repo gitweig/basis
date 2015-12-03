@@ -36,6 +36,8 @@ private:
 	BSThreadImpl* m_impl;
 };
 
+uint32 thread_id();
+
 } //namespace basis
 
 using namespace basis;

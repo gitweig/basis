@@ -55,13 +55,11 @@ namespace basis
 	} \
 	} while(0)
 
-#define  UNEXPECT(branch) \
+#define  UNEXPECT \
 	do{ \
-	if(branch){ \
 	fprintf(stderr, "The branch is unexpected at %s(..) in %s:%d, LastError:%u\r\n", __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
 	fflush(stderr); \
 	abort(); \
-	} \
 	} while (0);
 
 #else//__WINDOWS__
@@ -110,13 +108,11 @@ namespace basis
 	} \
 	} while (0)
 
-#define  UNEXPECT(branch) \
+#define  UNEXPECT \
 	do{ \
-	if(branch){ \
 	fprintf(stderr, "The branch is unexpected at %s(..) in %s:%d, LastError:%u\r\n", __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
 	fflush(stderr); \
 	abort(); \
-	} \
 	} while (0);
 
 #endif//__WINDOWS__
@@ -126,6 +122,7 @@ namespace basis
 #define VERIFY(x) (x)
 #define VERIFYMSG(x, msg) (x)
 #define CHECKPTR(ptr)
+#define UNEXPECT
 #endif//__DEBUG__
 
 }; // namespace basis

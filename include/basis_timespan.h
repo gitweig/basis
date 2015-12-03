@@ -19,6 +19,11 @@ public:
 	~BSTimeSpan();
 
 public:
+	int64 to_sec() const;
+	int64 to_msec() const;
+	int64 to_usec() const;
+
+public:
 	bool operator == (const BSTimeSpan& timespan) const;
 	bool operator != (const BSTimeSpan& timespan) const;
 	bool operator >  (const BSTimeSpan& timespan) const;
@@ -31,11 +36,6 @@ public:
 	BSTimeSpan& operator =  (const BSTimeSpan& timespan); 
 	BSTimeSpan& operator += (const BSTimeSpan& timespan);
 	BSTimeSpan& operator -= (const BSTimeSpan& timespan);
-
-public:
-	int64 to_sec() const;
-	int64 to_msec() const;
-	int64 to_usec() const;
 
 private:
 	int64 m_span; 

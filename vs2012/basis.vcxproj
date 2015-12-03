@@ -80,12 +80,14 @@
     <ClInclude Include="..\include\basis_smart_ptr.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
+    <ClInclude Include="..\include\basis_sync_queue.h" />
     <ClInclude Include="..\include\basis_thread.h" />
     <ClInclude Include="..\include\basis_timeformat.h" />
     <ClInclude Include="..\include\basis_timespan.h" />
     <ClInclude Include="..\include\basis_timestamp.h" />
     <ClInclude Include="..\include\basis_var.h" />
     <ClInclude Include="..\include\basis_var_holder.h" />
+    <ClInclude Include="..\include\basis_scope_locker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_event.cpp" />
