@@ -50,8 +50,7 @@ BSTimeStamp::BSTimeStamp( const timeval& tv )
 
 BSTimeStamp::BSTimeStamp( const tm& tm_ )
 {
-	int64 sec = mktime((struct tm*)&tm_);
-	m_usec = sec * 1000000;
+	set(tm_);
 }
 
 BSTimeStamp::~BSTimeStamp()
@@ -84,6 +83,17 @@ BSTimeStamp& BSTimeStamp::operator=( int64 timestamp )
 {
 	m_usec = timestamp;
 	return *this;
+}
+
+void BSTimeStamp::set( const tm& tm_ )
+{
+	int64 sec = mktime((struct tm*)&tm_);
+	m_usec = sec * 1000000;
+}
+
+int64 BSTimeStamp::get()
+{
+	return m_usec;
 }
 
 }// namespace basis

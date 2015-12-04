@@ -19,6 +19,9 @@ public:
 	BSTimeStamp(const BSTimeStamp& timestamp);
 	~BSTimeStamp();
 
+	void set(const tm& tm_);
+	int64 get();
+
 public:
 	bool operator == (const BSTimeStamp& timestamp) const;
 	bool operator != (const BSTimeStamp& timestamp) const;
