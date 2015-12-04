@@ -259,4 +259,84 @@ bool BSStrTool::toDoulbe(const string& str, double& dValue, uint32 radix /* = 10
 	return true;
 }
 
+uint32 BSStrTool::getHashCode(const string& key)  
+{  
+	uint32 hashcode = 0;  
+	uint32 kelength = (int) key.length();  
+
+	uint32 COUNT = (kelength >> 2) + ((kelength & 3) ? 1 : 0);  
+
+	uint32 _d = (COUNT << 2) - kelength;
+
+	uint32* data = new uint32[kelength/4 + 4];  
+
+	memcpy(((char*) data) + 0, key.c_str(), kelength);  
+	memset(((char*) data) + kelength, kelength, (COUNT << 2) - kelength);  
+
+	for (uint32 n = 0; n < COUNT; n++)  
+	{  
+		hashcode += (data[n] << n);  
+	}  
+
+	delete[] data;
+	return hashcode;  
+}  
+
+uint32 BSStrTool::FNVHash(const string& str)   
+{   
+	uint32 fnv_prime = 0x811C9DC5;   
+	uint32 hash = 0;   
+
+	for(size_t i = 0; i < str.length(); i++)   
+	{   
+		hash *= fnv_prime;   
+		hash ^= str[i];   
+	}   
+
+	return hash;
+}
+
+uint32 BSStrTool::murmur_hash2(const string& _data)
+{
+	uint32  h, k;
+
+	const char* data = _data.c_str();
+	size_t len = _data.size();
+
+	h = 0 ^ len;
+
+	while (len >= 4) {
+		k  = data[0];
+		k |= data[1] << 8;
+		k |= data[2] << 16;
+		k |= data[3] << 24;
+
+		k *= 0x5bd1e995;
+		k ^= k >> 24;
+		k *= 0x5bd1e995;
+
+		h *= 0x5bd1e995;
+		h ^= k;
+
+		data += 4;
+		len -= 4;
+	}
+
+	switch (len) {
+	case 3:
+		h ^= data[2] << 16;
+	case 2:
+		h ^= data[1] << 8;
+	case 1:
+		h ^= data[0];
+		h *= 0x5bd1e995;
+	}
+
+	h ^= h >> 13;
+	h *= 0x5bd1e995;
+	h ^= h >> 15;
+
+	return h;
+}
+
 }

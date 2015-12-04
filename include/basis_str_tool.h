@@ -56,6 +56,13 @@ public:
 
 		return ostr.str();
 	}
+
+	// ×Ö·û´®»ñµÃhash±àÂë
+	uint32 getHashCode(const string& str);
+	// FNVHash±àÂë
+	uint32 FNVHash(const string& str);
+	// murmur_hash2±àÂë(×î¿ì)
+	uint32 murmur_hash2(const string&);
 };
 
 };
