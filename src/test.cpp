@@ -3,6 +3,7 @@
 #include "basis_thread.h"
 #include "basis_sync_queue.h"
 #include "basis_event.h"
+#include "basis_timeformat.h"
 
 using namespace basis;
 
