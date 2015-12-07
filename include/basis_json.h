@@ -162,6 +162,7 @@ class BSBuffer
 	{
 		BUFFER_SIZE = 4096 // 4k
 	};
+
 public:
 	BSBuffer(uint32 capacity = 0);
 	void BSBuffer::pushBackChar(char ch);
