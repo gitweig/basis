@@ -81,6 +81,9 @@
     <ClInclude Include="..\include\basis_nocopy.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_str_tool.h">
+	  <Filter>include</Filter>
+	</ClInclude>
     <ClInclude Include="..\include\basis_sync_queue.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -126,6 +129,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_timeformat.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_str_tool.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

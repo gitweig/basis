@@ -32,6 +32,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <limits.h>
+#include <sstream>
 
 #include <vector>
 #include <string>
