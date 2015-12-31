@@ -78,13 +78,13 @@
     <ClInclude Include="..\include\basis_scope_locker.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\basis_nocopy.h">
+    <ClInclude Include="..\include\basis_str_tool.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\basis_str_tool.h">
-	  <Filter>include</Filter>
-	</ClInclude>
     <ClInclude Include="..\include\basis_sync_queue.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_buffer.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -132,6 +132,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_str_tool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_buffer.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
