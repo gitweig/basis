@@ -32,15 +32,15 @@ BSTimeStamp::BSTimeStamp()
 }
 
 
-BSTimeStamp::BSTimeStamp( time_t time_, int64 usec /*= 0*/ )
+BSTimeStamp::BSTimeStamp( time_t time_, int32 usec /*= 0*/ )
 {
 	m_usec = (int64)(time_ * 1000000) + usec;
 }
 
 BSTimeStamp::BSTimeStamp( const BSTimeStamp& timestamp )
+	: m_usec(timestamp.m_usec)
 {
-	m_usec = timestamp.m_usec;
-	//memcpy(this, &timestamp, sizeof(timestamp));
+
 }
 
 BSTimeStamp::BSTimeStamp( const timeval& tv )
@@ -50,13 +50,50 @@ BSTimeStamp::BSTimeStamp( const timeval& tv )
 
 BSTimeStamp::BSTimeStamp( const tm& tm_ )
 {
-	int64 sec = mktime((struct tm*)&tm_);
-	m_usec = sec * 1000000;
+	set(tm_);
 }
 
 BSTimeStamp::~BSTimeStamp()
 {
 	//empty
+}
+
+BSTimeStamp& BSTimeStamp::operator+=( const BSTimeSpan& timespan )
+{
+	m_usec += timespan.to_usec();
+	return *this;
+}
+
+BSTimeStamp& BSTimeStamp::operator-=( const BSTimeSpan& timespan )
+{
+	m_usec -= timespan.to_usec();
+	return *this;
+}
+
+BSTimeStamp& BSTimeStamp::operator=( const BSTimeStamp& timestamp )
+{
+	if (this != &timestamp)
+	{
+		m_usec = timestamp.m_usec;
+	}
+	return *this;
+}
+
+BSTimeStamp& BSTimeStamp::operator=( int64 timestamp )
+{
+	m_usec = timestamp;
+	return *this;
+}
+
+void BSTimeStamp::set( const tm& tm_ )
+{
+	int64 sec = mktime((struct tm*)&tm_);
+	m_usec = sec * 1000000;
+}
+
+int64 BSTimeStamp::get()
+{
+	return m_usec;
 }
 
 }// namespace basis
