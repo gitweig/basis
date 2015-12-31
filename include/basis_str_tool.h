@@ -56,6 +56,14 @@ public:
 
 		return ostr.str();
 	}
+	// 无符号类型转换成字符串
+	static string toStr(UCHAR _value)
+	{
+		char buff[10];
+		itoa(_value, buff, 10);
+
+		return buff;
+	}
 
 	// 字符串获得hash编码
 	uint32 getHashCode(const string& str);
