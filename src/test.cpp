@@ -28,7 +28,7 @@ void test_buffer()
 		buffer.fill_data("56789", 5);
 	}
 
-	buffer.print_data();
+	//buffer.print_data();
 
 	bool k1 = buffer.take_data(data, 6);
 	data[6] = '\0';
