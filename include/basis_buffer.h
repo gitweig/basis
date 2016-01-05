@@ -11,23 +11,27 @@ namespace basis
 //////////////////////////////////////////////////////////////////////////
 class BSBuffer
 {
-	enum { INIT_MEM = 10, MAX_MEM = 1024 * 1024 };
+	enum { MAX_MEM = 1024 * 1024 };
 
 public:
 	BSBuffer();
 	~BSBuffer();
 	
+	BSBuffer(const BSBuffer& _buff);
+
 	// 内存大小
-	uint32 capatiy() { return m_size; }
+	uint32 capatiy() const { return m_size; }
 	// 使用内存
-	uint32 use_size() { return m_use_size; }
+	uint32 use_size() const { return m_use_size; }
 
 	void reserve(uint32 _size);
 
 	// 填充数据
-	bool fill_data(void* pData, uint32 _size);
+	bool fill_data(const void* pData, uint32 _size);
 	// 提取数据
-	bool take_data(void* pData, uint32 _size);
+	uint32 take_data(void* pData, uint32 _size);
+
+	BSBuffer& operator=(const BSBuffer& _buff);
 
 	friend BSBuffer operator+(BSBuffer& buffer, BSBuffer& buffer1);
 
