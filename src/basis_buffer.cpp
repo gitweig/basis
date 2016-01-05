@@ -7,13 +7,13 @@ namespace basis
 // class BSBuffer
 //////////////////////////////////////////////////////////////////////////
 BSBuffer::BSBuffer()
-	: m_size(INIT_MEM)
+	: m_size(0)
 	, m_use_size(0)
+	, m_begin_mem(NULL)
+	, m_end_mem(NULL)
+	, m_begin_data(NULL)
+	, m_end_data(NULL)
 {
-	m_begin_mem = (char*)malloc(INIT_MEM);	
-	m_end_mem = m_begin_mem + m_size;
-	m_begin_data = m_begin_mem;
-	m_end_data = m_begin_data;
 }
 
 void BSBuffer::reserve(uint32 _size)
@@ -42,7 +42,7 @@ void BSBuffer::reserve(uint32 _size)
 			}
 		}
 
-		delete m_begin_mem;
+		free(m_begin_mem);
 		m_begin_mem = _buff;
 		m_end_mem = m_begin_mem + _size;
 		m_begin_data = m_begin_mem;
@@ -51,47 +51,27 @@ void BSBuffer::reserve(uint32 _size)
 	}
 }
 
-bool BSBuffer::fill_data(void* data, uint32 _size)
+bool BSBuffer::fill_data(const void* data, uint32 _size)
 {
 	if (NULL == data) return false;
 
-	char* pData = (char*)data;
+	const char* pData = (const char*)data;
 
 	// 内存不足，开辟新的内存
 	if ((m_size - m_use_size) < _size)
 	{
-		while ((m_size - m_use_size) < _size)
+		uint32 buff_size = m_size;
+		while ((buff_size - m_use_size) < _size)
 		{
-			m_size *= 2; // 在原来内存基础上扩展一倍
-			if (m_size > MAX_MEM)
+			buff_size *= 2; // 在原来内存基础上扩展一倍
+			if (buff_size > MAX_MEM)
 			{
 				return false;
 			}
 		}
 
-		// 复制原来的内容到新的内存中
-		char* tmp_buff = (char*)malloc(m_size);
-		if (NULL == tmp_buff) return false;
-
-		// 长型内存保存
-		if (m_end_data > m_begin_data)
-		{
-			memmove(tmp_buff, m_begin_data, m_use_size);
-		}
-		// 环形内存保存
-		else
-		{
-			uint32 after_size = m_end_mem - m_begin_data;
-			uint32 before_size = m_end_data - m_begin_mem;
-			memmove(tmp_buff, m_begin_data, after_size);
-			memmove(tmp_buff + after_size, m_begin_mem, before_size);
-
-			delete m_begin_mem;
-			m_begin_mem = tmp_buff;
-			m_end_mem = m_begin_mem + m_size;
-			m_begin_data = m_begin_mem;
-			m_end_data = m_begin_data + m_use_size;
-		}
+		// 重新开辟内存
+		reserve(buff_size);
 	}
 
 	// 长型内存结构
@@ -130,60 +110,102 @@ bool BSBuffer::fill_data(void* data, uint32 _size)
 	return true;
 }
 
-bool BSBuffer::take_data(void* data, uint32 _size)
+uint32 BSBuffer::take_data(void* data, uint32 _size)
 {
-	if (NULL == data) return false;
+	if (NULL == data) return 0;
 
 	// 这里没有动态释放内存，避免反复开辟和释放内存
 	char* pData = (char*)data;
 
-	if (_size > m_size || _size > m_use_size)
+	uint32 take_size = _size;
+
+	if (m_use_size < _size)
 	{
-		return false;
+		take_size = m_use_size;
 	}
 
 	// 长型内存
 	if (m_end_data > m_begin_data)
 	{
-		if (m_use_size < _size)
-		{
-			return false;
-		}
-		memmove(pData, m_begin_data, _size);
-		m_begin_data += _size;
+		memmove(pData, m_begin_data, take_size);
+		m_begin_data += take_size;
 	}
 	// 环形内存
 	else
 	{
 		// 向后内存检测
-		if ((uint32)(m_end_mem - m_begin_data) >= _size)
+		if ((uint32)(m_end_mem - m_begin_data) >= take_size)
 		{
-			memmove(pData, m_begin_data, _size);
-			m_begin_data += _size;
+			memmove(pData, m_begin_data, take_size);
+			m_begin_data += take_size;
 		}
 		else
 		{
 			uint32 mem_size = m_end_mem - m_begin_data;
 			// 前部分内存不足
-			if ((uint32)(m_end_data - m_begin_mem) < _size - mem_size)
+			if ((uint32)(m_end_data - m_begin_mem) < take_size - mem_size)
 			{
 				return false;
 			}
 
 			memmove(pData, m_begin_data, mem_size);
-			memmove(pData + mem_size, m_begin_mem, _size - mem_size);
-			m_begin_data = m_begin_mem + (_size - mem_size);
+			memmove(pData + mem_size, m_begin_mem, take_size - mem_size);
+			m_begin_data = m_begin_mem + (take_size - mem_size);
 		}
 	}
 
-	m_use_size -= _size;
+	m_use_size -= take_size;
 
-	return true;
+	return take_size;
+}
+
+BSBuffer& BSBuffer::operator=(const BSBuffer& _buff)
+{
+	char* pBuff = (char*)malloc(_buff.capatiy());
+
+	if (pBuff)
+	{
+		if (_buff.m_use_size)
+		{
+			// 长型结构保存
+			if (_buff.m_end_data > _buff.m_begin_data)
+			{
+				memmove(pBuff, _buff.m_begin_data, _buff.m_use_size);
+			}
+			// 环形结构保存 (将环型结构转换成长型结构)
+			else
+			{
+				uint32 after_size =  m_end_mem - m_begin_data;
+				uint32 before_size = m_end_data - m_begin_mem;
+				memmove(pBuff, _buff.m_begin_data, after_size);
+				memmove(pBuff + after_size, _buff.m_begin_mem, before_size);
+			}
+		}
+
+		m_begin_mem = pBuff;
+		m_end_mem = m_begin_mem + _buff.m_use_size;
+		m_begin_data = m_begin_mem;
+		m_end_data = m_begin_data + _buff.m_use_size;
+		m_size = _buff.m_size;
+	}
+
+	return *this;
+}
+
+BSBuffer::BSBuffer(const BSBuffer& _buff)
+{
+	if (NULL != m_begin_mem)
+	{
+		free(m_begin_mem);
+		m_begin_mem = NULL;
+	}
+
+	*this = _buff;
 }
 
 BSBuffer::~BSBuffer()
 {
-	delete m_begin_mem;
+	free(m_begin_mem);
 	m_begin_mem = NULL;
 	m_end_mem = NULL;
 	m_begin_data = NULL;
@@ -196,10 +218,17 @@ BSBuffer operator+(BSBuffer& buffer, BSBuffer& buffer1)
 	void* data = malloc(buffer.use_size());
 	if (NULL == data) return BSBuffer();
 
-	buffer.take_data(data, buffer.use_size());
+	if (buffer.use_size() != buffer.take_data(data, buffer.use_size()))
+	{
+		return BSBuffer();
+	}
 
 	void* data1 = malloc(buffer1.use_size());
-	buffer1.take_data(data1, buffer1.use_size());
+	if (NULL == data1) return BSBuffer();
+	if (buffer1.use_size() != buffer1.take_data(data1, buffer1.use_size()))
+	{
+		return BSBuffer();
+	}
 
 	tmpBuffer.fill_data(data, buffer.use_size());
 	tmpBuffer.fill_data(data1, buffer1.use_size());
