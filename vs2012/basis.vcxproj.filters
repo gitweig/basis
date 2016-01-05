@@ -87,6 +87,18 @@
     <ClInclude Include="..\include\basis_buffer.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\basis_ipaddr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_nocopy.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_sockaddr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_socket.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\basis_subject.cpp">
@@ -135,6 +147,18 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_buffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_global.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_ipaddr.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_sockaddr.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_socket.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
