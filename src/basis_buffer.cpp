@@ -218,10 +218,17 @@ BSBuffer operator+(BSBuffer& buffer, BSBuffer& buffer1)
 	void* data = malloc(buffer.use_size());
 	if (NULL == data) return BSBuffer();
 
-	buffer.take_data(data, buffer.use_size());
+	if (buffer.use_size() != buffer.take_data(data, buffer.use_size()))
+	{
+		return BSBuffer();
+	}
 
 	void* data1 = malloc(buffer1.use_size());
-	buffer1.take_data(data1, buffer1.use_size());
+	if (NULL == data1) return BSBuffer();
+	if (buffer1.use_size() != buffer1.take_data(data1, buffer1.use_size()))
+	{
+		return BSBuffer();
+	}
 
 	tmpBuffer.fill_data(data, buffer.use_size());
 	tmpBuffer.fill_data(data1, buffer1.use_size());
