@@ -3,66 +3,57 @@
 #include "basis_thread.h"
 #include "basis_sync_queue.h"
 #include "basis_event.h"
+#include "basis_buffer.h"
 
-using namespace basis;
-
-BSSyncQueue<int> syncqueue;
-
-BSEvent the_event;
-BSAtomic32 the_count;
-
-class Run1 : public BSRunnable
+void test_buffer()
 {
-public:
-	virtual void run(BSThread* p)
-	{
-		while (!p->wait_quit(0))
-		{
-			syncqueue.push(1);
-			if (the_count++ > 20000000)
-			{
-				break;
-			}
-		}
-	}
-};
+	BSBuffer buffer;
 
-class Run2 : public BSRunnable
+	buffer.fill_data("0123456789", 10);
+	buffer.reserve(17);
+	char* data = (char*)malloc(10);
+
+	for (uint8 i = 0; i < 10; ++i)
+	{
+		buffer.take_data((void*)data, 5);
+		data[5] = '\0';
+		string str = data;
+		printf("%s\n", str.c_str());
+		buffer.fill_data("01234",5);
+
+		bool k = buffer.take_data(data, 5);
+		data[5] = '\0';
+		string str1 = data;
+		printf("%s\n", str1.c_str());
+		buffer.fill_data("56789", 5);
+	}
+
+	buffer.print_data();
+
+	bool k1 = buffer.take_data(data, 6);
+	data[6] = '\0';
+	string str2 = data;
+	printf("%s\n", str2.c_str());
+}
+
+void test_mem()
 {
-public:
-	virtual void run(BSThread* p)
-	{
-		while (!p->wait_quit(0))
-		{
-			int value = 0;
-			syncqueue.pull(value);
-			if (syncqueue.size() == 0)
-			{
-				break;
-			}
-		}
-	}
-};
+	char *s="Golden Global View";
+	char* d = (char*)malloc(1000);
+	char* d1 = (char*)malloc(100);
 
+	memcpy(d,s,10);
+	memcpy(d1, d, 6);
+
+	d[strlen(s)]=0;
+	printf("%s",d);
+}
 
 int main()
 {
+	//test_mem();
+	test_buffer();
 
-	time_t t = time(0);
-	char tmp[64];
-	strftime( tmp, sizeof(tmp), "%Y/%m/%d %X %A 本年第%j天 %z", localtime(&t) );
-
-	SYSTEMTIME sys;
-	GetLocalTime( &sys );
-	printf( "%4d/%02d/%02d %02d:%02d:%02d.%03d 星期%1d\n", sys.wYear,   sys.wMonth,  sys.wDay, sys.wHour, sys.wMinute, sys.wSecond,sys.wMilliseconds,sys.wDayOfWeek);
-
-	LARGE_INTEGER m_nFreq;
-	LARGE_INTEGER m_nTime;
-	QueryPerformanceFrequency(&m_nFreq); // 获取时钟周期
-	QueryPerformanceCounter(&m_nTime);//获取当前时间
-	printf(" time:%lld us",(m_nTime.QuadPart*1000000/m_nFreq.QuadPart));//m_nFreq.QuadPart为:次数/s，这样就可以获得毫秒级别的了
-
-	Sleep(10000);
 	getchar();
 	return 0;
 }
