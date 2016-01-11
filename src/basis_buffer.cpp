@@ -53,6 +53,8 @@ void BSBuffer::reserve(uint32 _size)
 
 bool BSBuffer::fill_data(void* data, uint32 _size)
 {
+	if (NULL == data) return false;
+
 	char* pData = (char*)data;
 
 	// 内存不足，开辟新的内存
@@ -68,23 +70,24 @@ bool BSBuffer::fill_data(void* data, uint32 _size)
 		}
 
 		// 复制原来的内容到新的内存中
-		char* tmp = (char*)malloc(m_size);
-		
+		char* tmp_buff = (char*)malloc(m_size);
+		if (NULL == tmp_buff) return false;
+
 		// 长型内存保存
 		if (m_end_data > m_begin_data)
 		{
-			memmove(tmp, m_begin_data, m_use_size);
+			memmove(tmp_buff, m_begin_data, m_use_size);
 		}
 		// 环形内存保存
 		else
 		{
 			uint32 after_size = m_end_mem - m_begin_data;
 			uint32 before_size = m_end_data - m_begin_mem;
-			memmove(tmp, m_begin_data, after_size);
-			memmove(tmp + after_size, m_begin_mem, before_size);
+			memmove(tmp_buff, m_begin_data, after_size);
+			memmove(tmp_buff + after_size, m_begin_mem, before_size);
 
 			delete m_begin_mem;
-			m_begin_mem = tmp;
+			m_begin_mem = tmp_buff;
 			m_end_mem = m_begin_mem + m_size;
 			m_begin_data = m_begin_mem;
 			m_end_data = m_begin_data + m_use_size;
@@ -108,7 +111,6 @@ bool BSBuffer::fill_data(void* data, uint32 _size)
 			uint32 mem_size1 = _size - mem_size;
 			memmove(m_begin_mem, pData + mem_size, mem_size1);
 			m_end_data = m_begin_mem + mem_size1;
-			//ASSERT(m_end_data < m_begin_data);
 		}
 	}
 	// 环形内存结构
@@ -130,6 +132,8 @@ bool BSBuffer::fill_data(void* data, uint32 _size)
 
 bool BSBuffer::take_data(void* data, uint32 _size)
 {
+	if (NULL == data) return false;
+
 	// 这里没有动态释放内存，避免反复开辟和释放内存
 	char* pData = (char*)data;
 
@@ -190,6 +194,8 @@ BSBuffer operator+(BSBuffer& buffer, BSBuffer& buffer1)
 {
 	BSBuffer tmpBuffer;
 	void* data = malloc(buffer.use_size());
+	if (NULL == data) return BSBuffer();
+
 	buffer.take_data(data, buffer.use_size());
 
 	void* data1 = malloc(buffer1.use_size());
