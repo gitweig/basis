@@ -145,15 +145,14 @@ bool BSEvent::BSEventImpl::wait( uint32 ms )
 		struct timeval  now;
 		gettimeofday(&now, NULL);
 		uint32 scn = ms / 1000;
-		uint32 msc = ms % 1000;
 		ms = now.tv_usec * 1000;
-		tsp->tv_sec = now.tv_sec + scn + ms / 1000;
-		tsp->tv_nsec = ms % 1000;
+		tsp.tv_sec = now.tv_sec + scn + ms / 1000;
+		tsp.tv_nsec = ms % 1000;
 
 		pthread_mutex_lock(&m_mutex);
 		while (!m_variable)
 		{
-			int result = pthread_cond_timedwait(&m_cond, &mutex, &tsp);
+			int result = pthread_cond_timedwait(&m_cond, &m_mutex, &tsp);
 			if (result == ETIMEDOUT)
 			{
 				pthread_mutex_unlock(&m_mutex);
