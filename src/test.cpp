@@ -3,6 +3,7 @@
 #include "basis_thread.h"
 #include "basis_sync_queue.h"
 #include "basis_event.h"
+#include "basis_str_tool.h"
 
 using namespace basis;
 
@@ -47,22 +48,13 @@ public:
 
 int main()
 {
-
-	time_t t = time(0);
-	char tmp[64];
-	strftime( tmp, sizeof(tmp), "%Y/%m/%d %X %A 本年第%j天 %z", localtime(&t) );
-
-	SYSTEMTIME sys;
-	GetLocalTime( &sys );
-	printf( "%4d/%02d/%02d %02d:%02d:%02d.%03d 星期%1d\n", sys.wYear,   sys.wMonth,  sys.wDay, sys.wHour, sys.wMinute, sys.wSecond,sys.wMilliseconds,sys.wDayOfWeek);
-
-	LARGE_INTEGER m_nFreq;
-	LARGE_INTEGER m_nTime;
-	QueryPerformanceFrequency(&m_nFreq); // 获取时钟周期
-	QueryPerformanceCounter(&m_nTime);//获取当前时间
-	printf(" time:%lld us",(m_nTime.QuadPart*1000000/m_nFreq.QuadPart));//m_nFreq.QuadPart为:次数/s，这样就可以获得毫秒级别的了
-
-	Sleep(10000);
-	getchar();
+	double aaa = 986756.32323;
+	uint16 bbb = 234;
+	int32 ccc = -2335445;
+	uint8 ddd = 65;
+	string a = BSStrTool::toStr(aaa);
+	string b = BSStrTool::toStr(bbb);
+	string c = BSStrTool::toStr(ccc);
+	string d = BSStrTool::toStr(ddd);
 	return 0;
 }
