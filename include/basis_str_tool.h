@@ -2,6 +2,7 @@
 #define _BASIS_STR_TOOL_H_
 
 #include "basis_define.h"
+#include <limits>
 
 namespace basis
 {
