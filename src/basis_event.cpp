@@ -143,7 +143,7 @@ bool BSEvent::BSEventImpl::wait( uint32 ms )
 		// set time
 		struct timespec tsp;
 		struct timeval  now;
-		gettimeofday(&now);
+		gettimeofday(&now, NULL);
 		uint32 scn = ms / 1000;
 		uint32 msc = ms % 1000;
 		ms = now.tv_usec * 1000;
