@@ -171,7 +171,7 @@ bool BSEvent::BSEventImpl::wait( uint32 ms )
 		pthread_mutex_lock(&m_mutex);
 		while (!m_variable)
 		{
-			pthread_cond_wait(&m_cond, &mutex);
+			pthread_cond_wait(&m_cond, &m_mutex);
 		}
 		if (!m_manual)
 		{
