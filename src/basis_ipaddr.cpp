@@ -1,6 +1,8 @@
 #include "basis_ipaddr.h"
 #include "basis_str_tool.h"
+#ifdef __WINDOWS__
 #include <WS2tcpip.h>
+#endif
 
 namespace basis
 {

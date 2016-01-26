@@ -2,6 +2,7 @@
 #define _BASIS_STR_TOOL_H_
 
 #include "basis_define.h"
+#include <limits>
 
 namespace basis
 {
@@ -57,7 +58,7 @@ public:
 		return ostr.str();
 	}
 	// 无符号类型转换成字符串
-	static string toStr(UCHAR _value)
+	static string toStr(uint8 _value)
 	{
 		char buff[10];
 		itoa(_value, buff, 10);
