@@ -119,11 +119,11 @@ bool BSEvent::BSEventImpl::setEvent()
 	pthread_mutex_unlock(&m_mutex);
 	if (!m_manual)
 	{
-		pthread_cond_signal(m_cond);
+		pthread_cond_signal(&m_cond);
 	}
 	else
 	{
-		pthread_cond_broadcast(m_cond);
+		pthread_cond_broadcast(&m_cond);
 	}
 	return true;
 }
