@@ -109,7 +109,7 @@ BSEvent::BSEventImpl::~BSEventImpl()
 	// destroy cond
 	pthread_cond_destroy(&m_cond);
 	// destroy mutex
-	pthread_mutex_destroy(&mutex);
+	pthread_mutex_destroy(&m_mutex);
 }
 
 bool BSEvent::BSEventImpl::setEvent()
