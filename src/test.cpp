@@ -6,7 +6,7 @@
 #include "basis_str_tool.h"
 #include "basis_ipaddr.h"
 #include "basis_md5.h"
-#include "gtest\gtest.h"
+#include "gtest/gtest.h"
 
 using namespace basis;
 
