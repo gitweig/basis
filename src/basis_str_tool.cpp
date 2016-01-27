@@ -144,41 +144,27 @@ uint32 BSStrTool::split(const string& str, vector<string>& items, const char* se
 
 string BSStrTool::sprintf(const char* format, ...)
 {
-	ostringstream ostr;
-	ostr.precision(numeric_limits<double>::digits10);
-
-	int cnt = 0;
-	va_list arg_ptr;
-	va_start(arg_ptr, cnt);
-	for(int i=0; i<cnt; i++)
+	string result = "";
+	for (uint32 i = 1; i <= 20; ++i)
 	{
-		ostr<<arg_ptr;
+		va_list arg_start;
+		va_start(arg_start, format);
+
+		char* buff = (char*)malloc(1024 * i);
+		uint32 ret = vsprintf(buff, format, arg_start);
+		if (ret >= 1024 * i)
+		{
+			free(buff);
+			va_end(arg_start);
+			continue;
+		}
+		result.assign(buff, ret);
+
+		free(buff);
+		va_end(arg_start);
+		break;
 	}
-	va_end(arg_ptr);
-	return ostr.str();
-
-
-	//string result = "";
-	//for (uint32 i = 1; i <= 20; ++i)
-	//{
-	//	va_list arg_start;
-	//	va_start(arg_start, format);
-
-	//	char* buff = (char*)malloc(1024 * i);
-	//	uint32 ret = vsprintf(buff, format, arg_start);
-	//	if (ret >= 1024 * i)
-	//	{
-	//		free(buff);
-	//		va_end(arg_start);
-	//		continue;
-	//	}
-	//	result.assign(buff, ret);
-
-	//	free(buff);
-	//	va_end(arg_start);
-	//	break;
-	//}
-	//return result;
+	return result;
 }
 
 bool BSStrTool::toUint32(const string& str, uint32& uValue, uint32 radix)
