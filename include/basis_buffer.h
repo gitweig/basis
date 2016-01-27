@@ -6,8 +6,8 @@
 namespace basis
 {
 //////////////////////////////////////////////////////////////////////////
-// 自定义缓冲区 (在外部加锁，保护缓冲区)
 // class BSBuffer
+// 非线程安全
 //////////////////////////////////////////////////////////////////////////
 class BSBuffer
 {
@@ -15,8 +15,7 @@ class BSBuffer
 
 public:
 	BSBuffer();
-	~BSBuffer();
-	
+	~BSBuffer();	
 	BSBuffer(const BSBuffer& _buff);
 
 	// 内存大小
@@ -32,13 +31,6 @@ public:
 	uint32 take_data(void* pData, uint32 _size);
 
 	BSBuffer& operator=(const BSBuffer& _buff);
-
-	friend BSBuffer operator+(BSBuffer& buffer, BSBuffer& buffer1);
-
-	/*void print_data()
-	{
-	printf("buff data : %s\n", string(m_begin_mem).c_str());
-	}*/
 
 private:
 	uint32 m_size; // 内存大小
