@@ -24,7 +24,7 @@ public:
 		
 private:
 	string final();	
-	void update(const uint8 *input, uint32 length);
+	void update_input(const uint8 *input, uint32 length);
 	void transform(const uint8 block[64]);
 	void encode(const uint32* input, uint8* output, uint32 length);
 	void decode(const uint8 *input, uint32 *output, uint32 length);

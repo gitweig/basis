@@ -87,13 +87,13 @@ void MD5::reset()
 // Updating the context with a string. 
 string MD5::update(const string &str) 
 {
-	update((const byte*)str.c_str(), str.length());
+	update_input((const byte*)str.c_str(), str.length());
 	return final();
 }
 
 string MD5::update(const void *input, uint32 length) 
 {
-	update((const uint8*)input, length);
+	update_input((const uint8*)input, length);
 	return final();
 }
 
@@ -107,7 +107,7 @@ string MD5::updatefile(const string& filepath)
 	{
 		uint32 ret = fread(buf, 1, 2048, fd);
 		if (ret == 0) break;
-		md5.update(buf, (uint32)ret);
+		md5.update_input(buf, (uint32)ret);
 	}
 	fclose(fd);
 	return final();
@@ -116,7 +116,7 @@ string MD5::updatefile(const string& filepath)
 // MD5 block update operation. Continues an MD5 message-digest
 // operation, processing another message block, and updating the context.
 
-void MD5::update(const uint8 *input, uint32 length) 
+void MD5::update_input(const uint8 *input, uint32 length) 
 {
 	uint32 i, index, partLen;
 
@@ -170,10 +170,10 @@ string MD5::final()
 	// Pad out to 56 mod 64.
 	index = (uint32)((m_count[0] >> 3) & 0x3f);
 	padLen = (index < 56) ? (56 - index) : (120 - index);
-	update(PADDING, padLen);
+	update_input(PADDING, padLen);
 
 	// Append length (before padding) 
-	update(bits, 8);
+	update_input(bits, 8);
 
 	// Store state in digest 
 	encode(m_state, digest, 16);
