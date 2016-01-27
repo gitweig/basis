@@ -47,6 +47,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -65,19 +66,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\basis_atomic.h" />
+    <ClInclude Include="..\include\basis_buffer.h" />
     <ClInclude Include="..\include\basis_checked_delete.h" />
     <ClInclude Include="..\include\basis_critical.h" />
     <ClInclude Include="..\include\basis_define.h" />
     <ClInclude Include="..\include\basis_event.h" />
+    <ClInclude Include="..\include\basis_ipaddr.h" />
     <ClInclude Include="..\include\basis_json.h" />
     <ClInclude Include="..\include\basis_macro.h" />
     <ClInclude Include="..\include\basis_md5.h" />
     <ClInclude Include="..\include\basis_mutex.h" />
+    <ClInclude Include="..\include\basis_nocopy.h" />
     <ClInclude Include="..\include\basis_notification.h" />
     <ClInclude Include="..\include\basis_observer.h" />
     <ClInclude Include="..\include\basis_rw_lock.h" />
     <ClInclude Include="..\include\basis_runnable.h" />
     <ClInclude Include="..\include\basis_smart_ptr.h" />
+    <ClInclude Include="..\include\basis_sockaddr.h" />
+    <ClInclude Include="..\include\basis_socket.h" />
+    <ClInclude Include="..\include\basis_str_tool.h" />
     <ClInclude Include="..\include\basis_subject.h" />
     <ClInclude Include="..\include\basis_observer_ext.h" />
     <ClInclude Include="..\include\basis_sync_queue.h" />
@@ -90,13 +97,19 @@
     <ClInclude Include="..\include\basis_scope_locker.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\basis_buffer.cpp" />
     <ClCompile Include="..\src\basis_event.cpp" />
+    <ClCompile Include="..\src\basis_global.cpp" />
+    <ClCompile Include="..\src\basis_ipaddr.cpp" />
     <ClCompile Include="..\src\basis_json.cpp" />
     <ClCompile Include="..\src\basis_atomic.cpp" />
     <ClCompile Include="..\src\basis_critical.cpp" />
     <ClCompile Include="..\src\basis_md5.cpp" />
     <ClCompile Include="..\src\basis_mutex.cpp" />
     <ClCompile Include="..\src\basis_rw_lock.cpp" />
+    <ClCompile Include="..\src\basis_sockaddr.cpp" />
+    <ClCompile Include="..\src\basis_socket.cpp" />
+    <ClCompile Include="..\src\basis_str_tool.cpp" />
     <ClCompile Include="..\src\basis_subject.cpp" />
     <ClCompile Include="..\src\basis_thread.cpp" />
     <ClCompile Include="..\src\basis_timeformat.cpp" />

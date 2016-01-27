@@ -78,10 +78,25 @@
     <ClInclude Include="..\include\basis_scope_locker.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\basis_nocopy.h">
+    <ClInclude Include="..\include\basis_str_tool.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\basis_sync_queue.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_buffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_ipaddr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_nocopy.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_sockaddr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\basis_socket.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -126,6 +141,24 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\basis_timeformat.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_str_tool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_buffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_global.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_ipaddr.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_sockaddr.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\basis_socket.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
