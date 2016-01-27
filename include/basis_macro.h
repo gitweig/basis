@@ -75,7 +75,7 @@ namespace basis
 #define	ASSERTMSG(x, msg)\
 	do { \
 	if (!(x)) { \
-	fprintf(stderr, "Assertion ("#x") failed msg(%s) at %s(..) in %s:%d, LastError:%u\r\n", msg, __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
+	fprintf(stderr, "Assertion ("#x") failed msg(%s) at %s(..) in %s:%d, LastError:%u\r\n", msg, __FUNCTION__, __FILE__, __LINE__, errno); \
 	fflush(stderr); \
 	abort(); \
 	} \
@@ -93,7 +93,7 @@ namespace basis
 #define VERIFYMSG(x, msg) \
 	do { \
 	if (!(x)) { \
-	fprintf(stderr, "Verification ("#x") failed msg(%s) at %s(..) in %s:%d, LastError:%u\r\n", msg, __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
+	fprintf(stderr, "Verification ("#x") failed msg(%s) at %s(..) in %s:%d, LastError:%u\r\n", msg, __FUNCTION__, __FILE__, __LINE__, errno); \
 	fflush(stderr); \
 	abort(); \
 	} \
@@ -110,7 +110,7 @@ namespace basis
 
 #define  UNEXPECT() \
 	do{ \
-	fprintf(stderr, "The branch is unexpected at %s(..) in %s:%d, LastError:%u\r\n", __FUNCTION__, __FILE__, __LINE__, ::GetLastError()); \
+	fprintf(stderr, "The branch is unexpected at %s(..) in %s:%d, LastError:%u\r\n", __FUNCTION__, __FILE__, __LINE__, errno); \
 	fflush(stderr); \
 	abort(); \
 	} while (0);
