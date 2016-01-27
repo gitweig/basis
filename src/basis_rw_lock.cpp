@@ -231,7 +231,7 @@ public:
 		}
 		else
 		{
-			VERIFY(false)
+			UNEXPECT();
 		}
 
 		VERIFY(!pthread_rwlock_init(&m_rwl, &rwAttr));
