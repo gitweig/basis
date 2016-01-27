@@ -255,7 +255,7 @@ public:
 
 	void unlockRead()
 	{
-		VERIFY(pthread_rwlock_unlock(&m_rwLock);
+		VERIFY(pthread_rwlock_unlock(&m_rwLock));
 	}
 
 	void unlockWrite()
