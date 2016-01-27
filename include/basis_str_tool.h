@@ -60,6 +60,7 @@ public:
 		ostr<<_value;
 		return ostr.str();
 	}
+
 	// uint8类型 特化
 	static string toStr(uint8 _value)
 	{
