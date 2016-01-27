@@ -187,7 +187,7 @@ bool BSThread::BSThreadImpl::start( BSRunnable* runnable, BSThread* pinterface)
 		if (!(m_interface = pinterface)) break;
 		if (runnable) m_runnable = runnable;
 
-		int result = pthread_create(&m_tid, NULL, &BSThread::start_trn, pthread);
+		int result = pthread_create(&m_tid, NULL, &start_trn, this);
 
 		ASSERT(result == 0);	
 		if (result == 0)
@@ -211,12 +211,12 @@ void BSThread::BSThreadImpl::join()
 	m_event.reset();
 	m_interface = NULL;
 	m_runnable = NULL;
-	m_handle = INVALID_HANDLE_VALUE;
 	VERIFY(m_started-- > 0);	
 }
 
 void* BSThread::BSThreadImpl::start_trn( void * arg )
 {
+	BSThreadImpl* impl = static_cast<BSThreadImpl*>(arg);
 	if (impl == NULL) return 0;
 
 	if (impl->m_runnable)

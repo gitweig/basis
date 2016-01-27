@@ -1,4 +1,5 @@
 #include "basis_str_tool.h"
+#include <stdarg.h>
 
 namespace basis
 {
@@ -173,7 +174,7 @@ bool BSStrTool::toUint32(const string& str, uint32& uValue, uint32 radix)
 	char *pEnd = NULL;
 	uValue = strtoul(str.c_str(), &pEnd, radix);
 	if (ERANGE == errno) return false;
-	if (pEnd - str.c_str() != str.size()) return false;
+	if ((uint32)(pEnd - str.c_str()) != str.size()) return false;
 
 	return true;
 }
@@ -186,7 +187,7 @@ bool BSStrTool::toInt32(const string& str, int32& nValue, uint32 radix)
 	char *pEnd = NULL;
 	nValue = strtol(str.c_str(), &pEnd, radix);
 	if (ERANGE == errno) return false;
-	if (pEnd - str.c_str() != str.size()) return false;
+	if ((uint32)(pEnd - str.c_str()) != str.size()) return false;
 
 	return true;
 }
@@ -199,7 +200,7 @@ bool BSStrTool::toDoulbe(const string& str, double& dValue)
 	char *pEnd = NULL;
 	dValue = strtod(str.c_str(), &pEnd);
 	if (ERANGE == errno) return false;
-	if (pEnd - str.c_str() != str.size()) return false;
+	if ((uint32)(pEnd - str.c_str()) != str.size()) return false;
 
 	return true;
 }

@@ -22,10 +22,17 @@ bool BSSocket::open(int tp)
 
 bool BSSocket::close()
 {
+	#ifdef _WINDOWS_
 	if (isopen() && ::closesocket(m_sock) == -1)
 	{
 		return false;
 	}
+	#else // _WINDOWS_
+	if (isopen() && ::close(m_sock) == -1)
+	{
+		return false;
+	}
+	#endif
 	m_sock = INVALID_SOCKET;
 	return true;
 }
@@ -59,7 +66,7 @@ basis::BSSockAddr BSSocket::local_addr() const
 		struct sockaddr saddr = {};
 		socklen_t namelen = (socklen_t)sizeof(sockaddr);
 		if (0 != getsockname(m_sock, &saddr, &namelen)) break;
-
+		
 		return BSSockAddr::make_sock_addr(saddr);
 	} while (false);
 
