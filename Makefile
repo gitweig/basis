@@ -2,9 +2,10 @@ CPP = g++
 LINK = gcc
 
 CPPFLAG = -Wall -ggdb -march=x86-64 -DDEBUG -I./include
-LINKFLAG = -lm -lstdc++ -lpthread
+LINKFLAG = -lm -lstdc++ -lgtest -lpthread
 
 CPPSRC = $(wildcard ./src/*.cpp)
+CPPSRC += $(wildcard ./unit_test/*.cpp)
 
 OBJECT_NAME = basis_test
 
