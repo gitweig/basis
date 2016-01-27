@@ -41,7 +41,7 @@ public:
 			++m_rWait;
 			m_signal.reset(); // 设置为无信号状态,为了后续等待
 			m_locker.unlock();
-			m_signal.wait(); // 等待获取资源
+			m_signal.wait(); // 等待获取资源(等待解锁释放的信号)
 			m_locker.lock();
 			--m_rWait;
 		}
@@ -88,7 +88,7 @@ public:
 		if (m_readCount > 0)
 		{
 			ASSERT((readErase(thread_id()), true));
-			if (!m_readCount--) 
+			if (!--m_readCount) 
 			{
 				if (m_wWait || m_rWait)
 				{
@@ -116,7 +116,7 @@ public:
 			--m_wWait;
 		}
 
-		// 空闲状态;
+		// 写状态;
 		ASSERT((setWriteThreadId(thread_id()), true));
 		++m_writeCount;
 		m_locker.unlock();
@@ -179,7 +179,7 @@ private:
 	uint32 m_writeCount; // 写数量
 	uint32 m_rWait; // 读等待数量
 	uint32 m_wWait; // 写等待数量
-	BSEvent m_signal; //  读写信号
+	BSEvent m_signal; //  读写信号(控制读写等待)
 
 #ifdef __DEBUG__
 	uint32 m_writeThread; // 写线程id
