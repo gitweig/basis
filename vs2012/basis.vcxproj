@@ -120,6 +120,9 @@
     <ClCompile Include="..\src\basis_timestamp.cpp" />
     <ClCompile Include="..\src\basis_var.cpp" />
     <ClCompile Include="..\src\test.cpp" />
+    <ClCompile Include="..\unit_test\utest_ipaddr.cpp" />
+    <ClCompile Include="..\unit_test\utest_md5.cpp" />
+    <ClCompile Include="..\unit_test\utest_sockaddr.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

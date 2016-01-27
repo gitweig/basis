@@ -164,5 +164,14 @@
     <ClCompile Include="..\src\basis_socket.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\unit_test\utest_ipaddr.cpp">
+      <Filter>unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\unit_test\utest_md5.cpp">
+      <Filter>unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\unit_test\utest_sockaddr.cpp">
+      <Filter>unit_test</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

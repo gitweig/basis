@@ -48,12 +48,8 @@ public:
 	}
 };
 
-TEST(FooTest, HandleNoneZeroInput)
-{
-	EXPECT_EQ(BSIpAddr::make_ipaddr_by_ip("115.159.54.142").to_str(), string("115.159.54.143"));
-}
-
 int main(int argc, char* argv[])
 {
-	return 0;
+	testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 }
