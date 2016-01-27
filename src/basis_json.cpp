@@ -1,5 +1,6 @@
 #include "basis_json.h"
 
+#ifdef __WINDOWS__
 namespace basis
 {
 //////////////////////////////////////////////////////////////////////////
@@ -1013,3 +1014,5 @@ string BSJsonParser::unicodeToUtf8(uint32 unicode)
 }
 
 }
+
+#endif //__WINDOWS__

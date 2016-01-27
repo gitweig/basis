@@ -3,6 +3,8 @@
 
 #include "basis_define.h"
 
+#ifdef __WINDOWS__
+
 namespace basis
 {
 //////////////////////////////////////////////////////////////////////////
@@ -356,4 +358,7 @@ private:
 
 }
 using namespace basis;
+
+#endif // __WINDOWS__
+
 #endif // !_BASIS_JSON_H_
