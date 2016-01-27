@@ -84,7 +84,7 @@ const char* BSIpAddr::to_str( string& ip ) const
 {
 	union ConvUnion
 	{
-		struct { UCHAR s_b1,s_b2,s_b3,s_b4; } un_b;
+		struct { uint8 s_b1,s_b2,s_b3,s_b4; } un_b;
 		uint32 un_l;
 	} conv;
 	conv.un_l = m_ip_addr.s_addr;
