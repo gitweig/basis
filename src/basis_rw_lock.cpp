@@ -66,8 +66,7 @@ public:
 			m_signal.wait(0);
 			m_locker.lock();
 			--m_rWait;
-			// 检测现在状态
-
+			// 检测是否超时（防止意外情况，没有使用wait返回值）
 			if (m_writeCount || m_wWait) 
 			{
 				m_locker.unlock();

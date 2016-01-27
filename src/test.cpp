@@ -48,30 +48,12 @@ public:
 };
 
 
+struct  stru
+{
+	int a;
+};
+
 int main()
 {
-	double aaa = 986756.32323;
-	uint16 bbb = 234;
-	int32 ccc = -2335445;
-	uint8 ddd = 65;
-	char eee = 'a';
-	string a = BSStrTool::toStr(aaa);
-	string b = BSStrTool::toStr(bbb);
-	string c = BSStrTool::toStr(ccc);
-	string d = BSStrTool::toStr(ddd);
-	string e = BSStrTool::toStr(eee);
-	printf("%s\n", a.c_str());
-	printf("%s\n", b.c_str());
-	printf("%s\n", c.c_str());
-	printf("%s\n", d.c_str());
-	printf("%s\n", e.c_str());
-
-	string ipaddr = "115.159.54.142";
-	BSIpAddr addr = BSIpAddr::make_ipaddr_by_ip(ipaddr);
-	string newip = addr.to_str();
-	printf("%s\n", newip.c_str());
-	string md5str = MD5().update(ipaddr);
-	printf("%s\n", md5str.c_str());
-
 	return 0;
 }
