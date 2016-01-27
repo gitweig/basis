@@ -1,6 +1,8 @@
 #include "basis_sockaddr.h"
 #include "basis_str_tool.h"
+#ifdef _WINDOWS_
 #include <WS2tcpip.h>
+#endif // _WINDOWS_
 
 namespace basis
 {
