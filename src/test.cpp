@@ -4,6 +4,8 @@
 #include "basis_sync_queue.h"
 #include "basis_event.h"
 #include "basis_str_tool.h"
+#include "basis_ipaddr.h"
+#include "basis_md5.h"
 
 using namespace basis;
 
@@ -46,19 +48,30 @@ public:
 };
 
 
+struct kk
+{
+	int a;
+};
+
 int main()
 {
-	uint32 n = 100000;
-	char* p = "di da di da  dida mao %d";
-	
-	SYSTEMTIME _time;
-	GetSystemTime(&_time);
-	uint32 st = _time.wSecond * 1000 + _time.wMilliseconds;
-	
-	for (uint32 i = 0; i < n; ++i)
-	{
-		sprintf();
-	}
+
+	//uint32 n = 1000000;
+	//const char* p = "di da di da  dida mao %d";
+	//
+	//SYSTEMTIME _time;
+	//GetSystemTime(&_time);
+	//uint32 st = _time.wSecond * 1000 + _time.wMilliseconds;
+	//
+	//for (uint32 i = 0; i < n; ++i)
+	//{
+	//	string re = BSStrTool::sprintf(p, i + 1);
+	//	//printf("%s", re.c_str());
+	//}
+
+	//GetSystemTime(&_time);
+	//uint32 et = _time.wSecond * 1000 + _time.wMilliseconds;
+	//printf("use time %d\n", et - st);
 
 	return 0;
 }

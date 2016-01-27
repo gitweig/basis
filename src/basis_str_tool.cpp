@@ -147,23 +147,21 @@ string BSStrTool::sprintf(const char* format, ...)
 	string result = "";
 	for (uint32 i = 1; i <= 20; ++i)
 	{
-		va_list arg_start;
-		va_start(arg_start, format);
+		va_list arg_s;
+		va_start(arg_s, format);
 
-		char* buff = (char*)malloc(1024 * i);
-		uint32 ret = vsprintf(buff, format, arg_start);
-		if (ret >= 1024 * i)
+		//string buff;
+		result.resize(1024 * i);
+		int ret = vsnprintf((char *)result.c_str(), i * 1024 - 1, format, arg_s);
+		if ((uint32)ret >= 1024 * i)
 		{
-			free(buff);
-			va_end(arg_start);
 			continue;
 		}
-		result.assign(buff, ret);
 
-		free(buff);
-		va_end(arg_start);
 		break;
 	}
+
+
 	return result;
 }
 

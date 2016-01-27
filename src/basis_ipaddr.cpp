@@ -82,12 +82,19 @@ std::string BSIpAddr::to_str() const
 
 const char* BSIpAddr::to_str( string& ip ) const
 {
+	union ConvUnion
+	{
+		struct { uint8 s_b1,s_b2,s_b3,s_b4; } un_b;
+		uint32 un_l;
+	} conv;
+	conv.un_l = m_ip_addr.s_addr;
+
 	char ipaddr[16] = {0};
 	sprintf(ipaddr, "%d.%d.%d.%d",
-		m_ip_addr.S_un.S_un_b.s_b1,
-		m_ip_addr.S_un.S_un_b.s_b2,
-		m_ip_addr.S_un.S_un_b.s_b3,
-		m_ip_addr.S_un.S_un_b.s_b4);
+		conv.un_b.s_b1,
+		conv.un_b.s_b2,
+		conv.un_b.s_b3,
+		conv.un_b.s_b4);
 
 	ip = ipaddr;
 	return ip.c_str();

@@ -3,6 +3,8 @@
 
 #include "basis_define.h"
 
+#ifdef __WINDOWS__
+
 namespace basis
 {
 //////////////////////////////////////////////////////////////////////////
@@ -165,7 +167,7 @@ class BSBuffer
 
 public:
 	BSBuffer(uint32 capacity = 0);
-	void BSBuffer::pushBackChar(char ch);
+	void pushBackChar(char ch);
 
 private:
 	uint32 m_capacity; // ×î´óÈÝÁ¿
@@ -356,4 +358,7 @@ private:
 
 }
 using namespace basis;
+
+#endif // __WINDOWS__
+
 #endif // !_BASIS_JSON_H_

@@ -51,7 +51,7 @@ public:
 		m_locker.unlock();
 	}
 
-	bool tryReadLock(uint32 _sec)
+	bool tryReadLock()
 	{
 		m_locker.lock();
 
@@ -63,7 +63,7 @@ public:
 		{
 			++m_rWait;
 			m_locker.unlock();
-			m_signal.wait(_sec);
+			m_signal.wait(0);
 			m_locker.lock();
 			--m_rWait;
 			// 检测现在状态
@@ -122,7 +122,7 @@ public:
 		m_locker.unlock();
 	}
 
-	bool tryWriteLock(uint32 _sec = 0)
+	bool tryWriteLock()
 	{
 		m_locker.lock();
 
@@ -134,7 +134,7 @@ public:
 		{
 			++m_wWait;
 			m_locker.unlock();
-			m_signal.wait(_sec);
+			m_signal.wait(0);
 			m_locker.lock();
 			--m_wWait;
 			// 检测是否超时（防止意外情况，没有使用wait返回值）
@@ -231,10 +231,10 @@ public:
 		}
 		else
 		{
-			VERIFY(false)
+			UNEXPECT();
 		}
 
-		VERIFY(!pthread_rwlock_init(&m_rwl, &rwAttr));
+		VERIFY(!pthread_rwlock_init(&m_rwLock, &rwAttr));
 		VERIFY(!pthread_rwlockattr_destroy(&rwAttr));
 	}
 
@@ -255,12 +255,12 @@ public:
 
 	void unlockRead()
 	{
-		VERIFY(pthread_rwlock_unlock(&m_rwLock);
+		VERIFY(pthread_rwlock_unlock(&m_rwLock));
 	}
 
 	void unlockWrite()
 	{
-		VERIFY(pthread_rwlock_unlock(&m_rwLock);
+		VERIFY(pthread_rwlock_unlock(&m_rwLock));
 	}
 
 	bool tryReadLock()
@@ -301,21 +301,21 @@ void BSRWLock::readLock()
 	}
 }
 
-bool BSRWLock::tryReadLock(uint32 _sec)
+bool BSRWLock::tryReadLock()
 {
 	if (NULL != m_lock)
 	{
-		return m_lock->tryReadLock(_sec);
+		return m_lock->tryReadLock();
 	}
 
 	return false;
 }
 
-bool BSRWLock::tryWriteLock(uint32 _sec)
+bool BSRWLock::tryWriteLock()
 {
 	if (NULL != m_lock)
 	{
-		return m_lock->tryReadLock(_sec);
+		return m_lock->tryReadLock();
 	}
 
 	return false;

@@ -54,12 +54,21 @@ public:
 	template<typename T>
 	static string toStr(T _value)
 	{	
+		string type_name(typeid(_value).name(), 5);
+	
+		// 自定义类型
+		if ("class" == type_name || "struc" == type_name || "union" == type_name)
+		{
+			return "";
+		}
+
 		ostringstream ostr;
 		// 统一设置成double 10进制显示精度
 		ostr.precision(numeric_limits<double>::digits10);
 		ostr<<_value;
 		return ostr.str();
 	}
+
 	// uint8类型 特化
 	static string toStr(uint8 _value)
 	{
