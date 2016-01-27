@@ -58,17 +58,16 @@ public:
 		// 统一设置成double 10进制显示精度
 		ostr.precision(numeric_limits<double>::digits10);
 		ostr<<_value;
-
 		return ostr.str();
 	}
-	//// 无符号类型转换成字符串
-	//static string toStr(uint8 _value)
-	//{
-	//	char buff[10];
-	//	itoa(_value, buff, 10);
-
-	//	return buff;
-	//}
+	// uint8类型 特化
+	static string toStr(uint8 _value)
+	{
+		ostringstream ostr;
+		ostr.precision(numeric_limits<double>::digits10);
+		ostr<<(uint32)_value;
+		return ostr.str();
+	}
 };
 
 };

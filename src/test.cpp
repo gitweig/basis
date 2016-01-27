@@ -52,9 +52,11 @@ int main()
 	uint16 bbb = 234;
 	int32 ccc = -2335445;
 	uint8 ddd = 65;
+	char eee = 'a';
 	string a = BSStrTool::toStr(aaa);
 	string b = BSStrTool::toStr(bbb);
 	string c = BSStrTool::toStr(ccc);
 	string d = BSStrTool::toStr(ddd);
+	string e = BSStrTool::toStr(eee);
 	return 0;
 }
