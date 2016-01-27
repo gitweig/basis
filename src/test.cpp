@@ -3,7 +3,9 @@
 #include "basis_thread.h"
 #include "basis_sync_queue.h"
 #include "basis_event.h"
-#include "basis_timeformat.h"
+#include "basis_str_tool.h"
+#include "basis_ipaddr.h"
+#include "basis_md5.h"
 
 using namespace basis;
 
@@ -48,7 +50,23 @@ public:
 
 int main()
 {
+	double aaa = 986756.32323;
+	uint16 bbb = 234;
+	int32 ccc = -2335445;
+	uint8 ddd = 65;
+	char eee = 'a';
+	string a = BSStrTool::toStr(aaa);
+	string b = BSStrTool::toStr(bbb);
+	string c = BSStrTool::toStr(ccc);
+	string d = BSStrTool::toStr(ddd);
+	string e = BSStrTool::toStr(eee);
 
-	getchar();
+	string ipaddr = "115.159.54.142";
+	BSIpAddr addr = BSIpAddr::make_ipaddr_by_ip(ipaddr);
+	string newip = addr.to_str();
+
+	string md5str = MD5().update(ipaddr);
+
 	return 0;
 }
+

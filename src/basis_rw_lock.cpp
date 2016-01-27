@@ -231,7 +231,7 @@ public:
 		}
 		else
 		{
-			VERIFY(false)
+			UNEXPECT();
 		}
 
 		VERIFY(!pthread_rwlock_init(&m_rwl, &rwAttr));
@@ -255,12 +255,12 @@ public:
 
 	void unlockRead()
 	{
-		VERIFY(pthread_rwlock_unlock(&m_rwLock);
+		VERIFY(pthread_rwlock_unlock(&m_rwLock));
 	}
 
 	void unlockWrite()
 	{
-		VERIFY(pthread_rwlock_unlock(&m_rwLock);
+		VERIFY(pthread_rwlock_unlock(&m_rwLock));
 	}
 
 	bool tryReadLock()
