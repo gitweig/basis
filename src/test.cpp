@@ -4,6 +4,7 @@
 #include "basis_sync_queue.h"
 #include "basis_event.h"
 #include "basis_str_tool.h"
+#include "basis_ipaddr.h"
 
 using namespace basis;
 
@@ -58,5 +59,10 @@ int main()
 	string c = BSStrTool::toStr(ccc);
 	string d = BSStrTool::toStr(ddd);
 	string e = BSStrTool::toStr(eee);
+
+	string ipaddr = "115.159.54.142";
+	BSIpAddr addr = BSIpAddr::make_ipaddr_by_ip(ipaddr);
+	string newip = addr.to_str();
+
 	return 0;
 }
