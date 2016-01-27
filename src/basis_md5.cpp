@@ -87,7 +87,7 @@ void MD5::reset()
 // Updating the context with a string. 
 string MD5::update(const string &str) 
 {
-	update_input((const byte*)str.c_str(), str.length());
+	update_input((const uint8*)str.c_str(), str.length());
 	return final();
 }
 

@@ -19,7 +19,7 @@ public:
 	MD5();
 	void reset();
 	string update(const string &str);
-	string update(const void *input, size_t length);
+	string update(const void *input, uint32 length);
 	string updatefile(const string& filepath);
 		
 private:
