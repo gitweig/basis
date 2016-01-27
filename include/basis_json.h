@@ -165,7 +165,7 @@ class BSBuffer
 
 public:
 	BSBuffer(uint32 capacity = 0);
-	void BSBuffer::pushBackChar(char ch);
+	void pushBackChar(char ch);
 
 private:
 	uint32 m_capacity; // ×î´óÈÝÁ¿
