@@ -23,8 +23,8 @@ public:
 	void writeLock();
 	void unlockRead();
 	void unlockWrite();
-	bool tryReadLock(uint32 _sec);
-	bool tryWriteLock(uint32 _sec);
+	bool tryReadLock();
+	bool tryWriteLock();
 
 private:
 	class SysRWLock;

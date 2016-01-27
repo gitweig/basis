@@ -41,7 +41,7 @@ public:
 			++m_rWait;
 			m_signal.reset(); // 设置为无信号状态,为了后续等待
 			m_locker.unlock();
-			m_signal.wait(); // 等待获取资源
+			m_signal.wait(); // 等待获取资源(等待解锁释放的信号)
 			m_locker.lock();
 			--m_rWait;
 		}
@@ -51,7 +51,7 @@ public:
 		m_locker.unlock();
 	}
 
-	bool tryReadLock(uint32 _sec)
+	bool tryReadLock()
 	{
 		m_locker.lock();
 
@@ -63,11 +63,10 @@ public:
 		{
 			++m_rWait;
 			m_locker.unlock();
-			m_signal.wait(_sec);
+			m_signal.wait(0);
 			m_locker.lock();
 			--m_rWait;
-			// 检测现在状态
-
+			// 检测是否超时（防止意外情况，没有使用wait返回值）
 			if (m_writeCount || m_wWait) 
 			{
 				m_locker.unlock();
@@ -88,7 +87,7 @@ public:
 		if (m_readCount > 0)
 		{
 			ASSERT((readErase(thread_id()), true));
-			if (!m_readCount--) 
+			if (!--m_readCount) 
 			{
 				if (m_wWait || m_rWait)
 				{
@@ -116,13 +115,13 @@ public:
 			--m_wWait;
 		}
 
-		// 空闲状态;
+		// 写状态;
 		ASSERT((setWriteThreadId(thread_id()), true));
 		++m_writeCount;
 		m_locker.unlock();
 	}
 
-	bool tryWriteLock(uint32 _sec = 0)
+	bool tryWriteLock()
 	{
 		m_locker.lock();
 
@@ -134,7 +133,7 @@ public:
 		{
 			++m_wWait;
 			m_locker.unlock();
-			m_signal.wait(_sec);
+			m_signal.wait(0);
 			m_locker.lock();
 			--m_wWait;
 			// 检测是否超时（防止意外情况，没有使用wait返回值）
@@ -179,7 +178,7 @@ private:
 	uint32 m_writeCount; // 写数量
 	uint32 m_rWait; // 读等待数量
 	uint32 m_wWait; // 写等待数量
-	BSEvent m_signal; //  读写信号
+	BSEvent m_signal; //  读写信号(控制读写等待)
 
 #ifdef __DEBUG__
 	uint32 m_writeThread; // 写线程id
@@ -263,12 +262,12 @@ public:
 		VERIFY(pthread_rwlock_unlock(&m_rwLock));
 	}
 
-	bool tryReadLock(uint32 _sec)
+	bool tryReadLock()
 	{
 		return 0 == pthread_rwlock_tryrdlock(&m_rwLock);
 	}
 
-	bool tryWriteLock(uint32 _sec)
+	bool tryWriteLock()
 	{
 		return 0 == pthread_rwlock_trywrlock(&m_rwLock);
 	}
@@ -301,21 +300,21 @@ void BSRWLock::readLock()
 	}
 }
 
-bool BSRWLock::tryReadLock(uint32 _sec)
+bool BSRWLock::tryReadLock()
 {
 	if (NULL != m_lock)
 	{
-		return m_lock->tryReadLock(_sec);
+		return m_lock->tryReadLock();
 	}
 
 	return false;
 }
 
-bool BSRWLock::tryWriteLock(uint32 _sec)
+bool BSRWLock::tryWriteLock()
 {
 	if (NULL != m_lock)
 	{
-		return m_lock->tryReadLock(_sec);
+		return m_lock->tryReadLock();
 	}
 
 	return false;
