@@ -26,14 +26,11 @@ basis::BSIpAddr BSIpAddr::make_ipaddr_by_host( const string& host )
 
 basis::BSIpAddr BSIpAddr::make_ipaddr_by_ip( const string& ip )
 {
-	uint32 numip = inet_addr(ip.c_str());
-	if (numip == INADDR_NONE )
+	in_addr addr;
+	if (inet_pton(AF_INET, ip.c_str(), &addr) != 1)
 	{
 		return ErrorIp;
 	}
-
-	in_addr addr;
-	addr.S_un.S_addr = numip;
 	return BSIpAddr(addr);		
 }
 
@@ -45,7 +42,7 @@ basis::BSIpAddr BSIpAddr::make_ipaddr_by_num( uint32 ipnum )
 	}
 
 	in_addr addr;
-	addr.S_un.S_addr = htonl(ipnum);
+	addr.s_addr = htonl(ipnum);
 	return BSIpAddr(addr);
 }
 
