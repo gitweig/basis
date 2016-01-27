@@ -234,7 +234,7 @@ public:
 			UNEXPECT();
 		}
 
-		VERIFY(!pthread_rwlock_init(&m_rwl, &rwAttr));
+		VERIFY(!pthread_rwlock_init(&m_rwLock, &rwAttr));
 		VERIFY(!pthread_rwlockattr_destroy(&rwAttr));
 	}
 
@@ -263,15 +263,15 @@ public:
 		VERIFY(pthread_rwlock_unlock(&m_rwLock));
 	}
 
-	bool tryReadLock()
-	{
-		return 0 == pthread_rwlock_tryrdlock(&m_rwLock);
-	}
+	//bool tryReadLock()
+	//{
+	//	return 0 == pthread_rwlock_tryrdlock(&m_rwLock);
+	//}
 
-	bool tryWriteLock()
-	{
-		return 0 == pthread_rwlock_trywrlock(&m_rwLock);
-	}
+	//bool tryWriteLock()
+	//{
+	//	return 0 == pthread_rwlock_trywrlock(&m_rwLock);
+	//}
 
 private:
 	pthread_rwlock_t m_rwLock;
