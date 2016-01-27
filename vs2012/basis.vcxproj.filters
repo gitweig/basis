@@ -7,6 +7,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{4eae4c6e-805f-46ca-8bd5-ce5df8b05509}</UniqueIdentifier>
     </Filter>
+    <Filter Include="unit_test">
+      <UniqueIdentifier>{c6f7d760-5834-4785-8b77-3a06940d88d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\basis_observer.h">
