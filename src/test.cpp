@@ -48,15 +48,17 @@ public:
 
 int main()
 {
-	double aaa = 986756.32323;
-	uint16 bbb = 234;
-	int32 ccc = -2335445;
-	uint8 ddd = 65;
-	char eee = 'a';
-	string a = BSStrTool::toStr(aaa);
-	string b = BSStrTool::toStr(bbb);
-	string c = BSStrTool::toStr(ccc);
-	string d = BSStrTool::toStr(ddd);
-	string e = BSStrTool::toStr(eee);
+	uint32 n = 100000;
+	char* p = "di da di da  dida mao %d";
+	
+	SYSTEMTIME _time;
+	GetSystemTime(&_time);
+	uint32 st = _time.wSecond * 1000 + _time.wMilliseconds;
+	
+	for (uint32 i = 0; i < n; ++i)
+	{
+		sprintf();
+	}
+
 	return 0;
 }
