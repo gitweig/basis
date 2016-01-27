@@ -263,15 +263,15 @@ public:
 		VERIFY(pthread_rwlock_unlock(&m_rwLock));
 	}
 
-	//bool tryReadLock()
-	//{
-	//	return 0 == pthread_rwlock_tryrdlock(&m_rwLock);
-	//}
+	bool tryReadLock(uint32 _sec)
+	{
+		return 0 == pthread_rwlock_tryrdlock(&m_rwLock);
+	}
 
-	//bool tryWriteLock()
-	//{
-	//	return 0 == pthread_rwlock_trywrlock(&m_rwLock);
-	//}
+	bool tryWriteLock(uint32 _sec)
+	{
+		return 0 == pthread_rwlock_trywrlock(&m_rwLock);
+	}
 
 private:
 	pthread_rwlock_t m_rwLock;
