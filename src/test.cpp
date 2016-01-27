@@ -6,6 +6,7 @@
 #include "basis_str_tool.h"
 #include "basis_ipaddr.h"
 #include "basis_md5.h"
+#include "gtest\gtest.h"
 
 using namespace basis;
 
@@ -47,8 +48,12 @@ public:
 	}
 };
 
+TEST(FooTest, HandleNoneZeroInput)
+{
+	EXPECT_EQ(BSIpAddr::make_ipaddr_by_ip("115.159.54.142").to_str(), string("115.159.54.143"));
+}
 
-int main()
+int main(int argc, char* argv[])
 {
 	double aaa = 986756.32323;
 	uint16 bbb = 234;
@@ -73,5 +78,7 @@ int main()
 	string md5str = MD5().update(ipaddr);
 	printf("%s\n", md5str.c_str());
 
-	return 0;
+
+	testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 }
