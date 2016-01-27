@@ -1,4 +1,5 @@
 #include "basis_str_tool.h"
+#include <stdarg.h>
 
 namespace basis
 {
