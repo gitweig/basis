@@ -1,5 +1,6 @@
 CPP = g++
 LINK = gcc
+AR = ar rc
 
 CPPFLAG = -Wall -ggdb -march=x86-64 -DDEBUG -I./include -I./depend/include
 LINKFLAG = -lm -lstdc++ -lgtest -lpthread
@@ -15,7 +16,7 @@ all : lib $(TEST_NAME)
 
 lib : $(LIB_NAME)
 $(LIB_NAME) : $(CPPSRC:.cpp=.o)
-	ar rc -o $(LIB_NAME) $(CPPSRC:.cpp=.o)  $(LINKFLAG)
+	$(AR) $(LIB_NAME) $(CPPSRC:.cpp=.o)
 	@mv basis.a lib/basis.a
 
 unit_test : $(TEST_NAME)
