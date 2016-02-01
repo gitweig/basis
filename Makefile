@@ -1,27 +1,28 @@
 CPP = g++
 LINK = gcc
-AR = ar rc
+AR = ar rcs
 
 CPPFLAG = -Wall -ggdb -march=x86-64 -DDEBUG -I./include -I./depend/include
 LINKFLAG = -lm -lstdc++ -lgtest -lpthread
 
 CPPSRC = $(wildcard ./src/*.cpp)
-CPPSRC += $(wildcard ./unit_test/*.cpp)
 TESTCPPSRC = $(wildcard ./unit_test/*.cpp)
 
-LIB_NAME = basis.a
+LIB_DIR = lib
+LIB_NAME = libbasis.a
 TEST_NAME = basis_test
 
-all : lib $(TEST_NAME)
+all : $(LIB_NAME) $(TEST_NAME)
 
 lib : $(LIB_NAME)
 $(LIB_NAME) : $(CPPSRC:.cpp=.o)
 	$(AR) $(LIB_NAME) $(CPPSRC:.cpp=.o)
-	@mv basis.a lib/basis.a
+	@mkdir -p $(LIB_DIR)
+	@mv $(LIB_NAME) lib/
 
 unit_test : $(TEST_NAME)
 $(TEST_NAME) : $(TESTCPPSRC:.cpp=.o)
-	$(LINK) -o $(TEST_NAME) $(TESTCPPSRC:.cpp=.o) $(LIB_NAME) $(LINKFLAG)
+	$(LINK) -o $(TEST_NAME) $(TESTCPPSRC:.cpp=.o) $(LIB_DIR)/$(LIB_NAME) $(LINKFLAG)
 
 %.o : %.cpp
 	$(CPP) -c $(CPPFLAG) $< -o $@
