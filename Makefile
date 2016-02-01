@@ -11,11 +11,11 @@ TESTCPPSRC = $(wildcard ./unit_test/*.cpp)
 LIB_NAME = basis.a
 TEST_NAME = basis_test
 
-all : $(LIB_NAME) $(TEST_NAME)
+all : lib $(TEST_NAME)
 
 lib : $(LIB_NAME)
 $(LIB_NAME) : $(CPPSRC:.cpp=.o)
-	$(LINK) -o $(LIB_NAME) $(CPPSRC:.cpp=.o)  $(LINKFLAG)
+	ar rc -o $(LIB_NAME) $(CPPSRC:.cpp=.o)  $(LINKFLAG)
 	@mv basis.a lib/basis.a
 
 unit_test : $(TEST_NAME)
