@@ -37,7 +37,7 @@ bool BSTimeFormat::do_parse( BSTimeStamp& timestamp,const string& strTime )
 string BSTimeFormat::format_time( BSTimeStamp& timestamp, int32 style )
 {
 	string strtime;
-	time_t timenow = (time_t)timestamp.get();
+	const time_t timenow = (time_t)timestamp.get() / 1000000;
 	strtime = BSTimeFormat::format_time(timenow, style);
 	return strtime;
 }
